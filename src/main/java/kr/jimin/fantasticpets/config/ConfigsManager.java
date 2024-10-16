@@ -72,12 +72,6 @@ public class ConfigsManager {
         return file;
     }
 
-    /*public void petCreate() {
-        List<String> petId = PetsUtils.getAllPets();
-        File file = new File(petsFolder, petId + ".yml");
-        if (file.exists()) return;
-        YamlUtils.create(file);
-    }*/
     public void petCreate() {
         List<String> petIds = PetsUtils.getAllPets();
 

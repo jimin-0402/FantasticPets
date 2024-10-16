@@ -22,7 +22,7 @@ public enum Config {
     PET_ITEM_MATERIAL("Pet.item.material"),
     PET_ITEM_NAME("Pet.item.display-name"),
     PET_ITEM_LORE("Pet.item.lore"),
-    PET_ITEM_MODEL("Pet.item.model-data"),
+    PET_ITEM_MODEL_DATA("Pet.item.model-data"),
 
     // sound
     SOUND_SUCCESS("sound.success"),
@@ -68,6 +68,8 @@ public enum Config {
     public List<String> toStringList() {
         return FantasticPetsPlugin.get().getConfigsManager().getConfigs().getStringList(path);
     }
+
+    public int toInt() { return (int) getValue(); }
 
     public ConfigurationSection toConfigSection() {
         return FantasticPetsPlugin.get().getConfigsManager().getConfigs().getConfigurationSection(path);

@@ -5,6 +5,8 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import kr.jimin.fantasticpets.command.CommandsManager;
 import kr.jimin.fantasticpets.command.TestCommand;
 import kr.jimin.fantasticpets.config.ConfigsManager;
+import kr.jimin.fantasticpets.listener.ItemCheckListener;
+import kr.jimin.fantasticpets.util.pet.PetsFileManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,6 +38,8 @@ public class FantasticPetsPlugin extends JavaPlugin {
 
         new CommandsManager(this).loadCommands();
         new TestCommand(this).loadCommands();
+
+        getServer().getPluginManager().registerEvents(new ItemCheckListener(this), this);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class FantasticPetsPlugin extends JavaPlugin {
     public void reloadConfigs() {
         configsManager = new ConfigsManager(this);
         configsManager.validatesConfig();
+        PetsFileManager.reloadPetItems(this);
     }
 
     public ConfigsManager getConfigsManager() {

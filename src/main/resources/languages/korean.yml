@@ -1,7 +1,7 @@
 config-version: 1
 
 general:
-  prefix: "<gradient:#FC5C7D:#6A82FB>FurryFriends</gradient> <gray>| "
+  prefix: "<gradient:#FC5C7D:#6A82FB>FantasticPets</gradient> <gray>| "
   messages:
     reload: "<prefix><#b8bbc2>성공적으로 새로고침되었습니다."
     not-item: "<prefix><#b8bbc2>아이템을 찾을 수 없습니다. <pet-item>"
@@ -23,8 +23,8 @@ pet:
     획득하였습니다."
 
 command:
-  help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/furryfriends\
-    \ reload><#6f737d>/ff <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> 플러그인\
+  help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/fantasticpets\
+    \ reload><#6f737d>/fp <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> 플러그인\
     을 리로드합니다 \n<hover:show_text:\"<gray>인벤토리 명령어\"><click:SUGGEST_COMMAND:/oraxen\
     \ inv><#6f737d>/o <#b8bbc2>인벤토리</click></hover>  <#6f737d>»<#b8bbc2> 인벤토리에 있는\
     \ Oraxen 아이템을 표시합니다"

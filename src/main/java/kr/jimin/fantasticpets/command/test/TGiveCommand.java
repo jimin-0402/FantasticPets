@@ -9,10 +9,10 @@ import kr.jimin.fantasticpets.FantasticPetsPlugin;
 import kr.jimin.fantasticpets.util.pet.PetsFileManager;
 import org.bukkit.entity.Player;
 
-public class GiveCommand {
+public class TGiveCommand {
     private final FantasticPetsPlugin plugin;
 
-    public GiveCommand(FantasticPetsPlugin plugin) {
+    public TGiveCommand(FantasticPetsPlugin plugin) {
         this.plugin = plugin;
     }
 

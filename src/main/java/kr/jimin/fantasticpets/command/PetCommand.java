@@ -2,26 +2,23 @@ package kr.jimin.fantasticpets.command;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
-import kr.jimin.fantasticpets.command.test.TGiveCommand;
+import kr.jimin.fantasticpets.command.pet.PetGiveItemCommand;
 import kr.jimin.fantasticpets.config.Message;
 
-public class TestCommand {
-
+public class PetCommand {
     private final FantasticPetsPlugin plugin;
 
-    public TestCommand(FantasticPetsPlugin plugin) {
+    public PetCommand(FantasticPetsPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public void loadCommands() {
-        new CommandAPICommand("testf")
-                .withAliases("tf")
+    public CommandAPICommand getPetCommand() {
+        return new CommandAPICommand("pet")
                 .withSubcommands(
-                        (new TGiveCommand(plugin).getPlayerPetsCommand())
+                        (new PetGiveItemCommand(plugin)).getGivePetItemCommand()
                 )
                 .executes((sender, args) -> {
                     Message.COMMAND_HELP.send(sender);
-                })
-                .register();
+                });
     }
 }

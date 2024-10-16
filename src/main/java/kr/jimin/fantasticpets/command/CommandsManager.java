@@ -2,6 +2,8 @@ package kr.jimin.fantasticpets.command;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
+import kr.jimin.fantasticpets.command.commands.GiveItemCommand;
+import kr.jimin.fantasticpets.command.commands.ReloadCommand;
 import kr.jimin.fantasticpets.config.Message;
 
 public class CommandsManager {
@@ -13,9 +15,12 @@ public class CommandsManager {
 
     public void loadCommands() {
         new CommandAPICommand("fantasticpets")
-                .withAliases("fp")
+                .withAliases("fp", "fpets")
                 .withSubcommands(
-                        (new ReloadCommand(plugin)).getReloadCommand()
+                        (new PetCommand(plugin)).getPetCommand(),
+                        (new ReloadCommand()).getReloadCommand(),
+                        (new GiveItemCommand()).getGiveItemCommand()
+
                 )
                 .executes((sender, args) -> {
                     Message.COMMAND_HELP.send(sender);
