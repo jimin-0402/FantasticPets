@@ -1,0 +1,6 @@
+enable: false
+item:
+  material: STONE
+  display_name: ""
+  lore: []
+  custom_model_data: -1

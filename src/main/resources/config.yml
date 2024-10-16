@@ -1,0 +1,25 @@
+debug: false
+
+Setting:
+  language: "korean"
+  cluck-type: RIGHT
+
+Pet:
+  # 중복 허용
+  duplication: true
+
+  item:
+    material: "diamond_sword"
+    display-name: "강력한 검"
+    lore:
+      - "이 검은 전설의 아이템입니다."
+    model-data: 123
+
+Sound:
+  # sound setting: "soundName, volume, pitch"
+  success:
+    - "minecraft:ui.toast.challenge_complete, 1, 1"
+    - "minecraft:entity.player.levelup, 1, 1"
+  fail:
+    - "minecraft:ui.button.click, 1, 1"
+    - "minecraft:entity.player.hurt, 1, 1"

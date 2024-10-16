@@ -1,0 +1,42 @@
+config-version: 1
+
+general:
+  prefix: "<gradient:#FC5C7D:#6A82FB>FurryFriends</gradient> <gray>| "
+  messages:
+    reload: "<prefix><#b8bbc2>성공적으로 새로고침되었습니다."
+    not-item: "<prefix><#b8bbc2>아이템을 찾을 수 없습니다. <pet-item>"
+    give-item: "<prefix><player><#b8bbc2>님께 <pet-item><#b8bbc2>을(를) 지급했습니다. <gray>(<category-name><category-prefix>[<amount>])"
+    given-item: "<prefix><pet-item><#b8bbc2>을(를) 지급받았습니다. <gray>(<category-name><category-prefix>[<amount>])"
+
+pet:
+  category:
+    prefix: "<reset><#43c9fa>등급</reset>"
+  ownership:
+    has: "<prefix><#b8bbc2>당신은 <reset><pet-name></reset><#b8bbc2>을(를) 소유하고 있습니다."
+    has-target: "<prefix><#43c9fa><player><#b8bbc2>님은 이미 <reset><pet-name></reset><#b8bbc2>을(를)
+      소유하고 있습니다."
+    has-not: "<prefix><#43c9fa><player><#b8bbc2>님은 <reset><pet-name></reset><#b8bbc2>을(를)
+      소유하고 있지 않습니다."
+    has-all: "<prefix><#b8bbc2>모든 펫을 소유하고 있습니다."
+  not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2>은(는) 등록된 펫이 아닙니다."
+  acquired: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
+    획득하였습니다."
+
+command:
+  help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/furryfriends\
+    \ reload><#6f737d>/ff <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> 플러그인\
+    을 리로드합니다 \n<hover:show_text:\"<gray>인벤토리 명령어\"><click:SUGGEST_COMMAND:/oraxen\
+    \ inv><#6f737d>/o <#b8bbc2>인벤토리</click></hover>  <#6f737d>»<#b8bbc2> 인벤토리에 있는\
+    \ Oraxen 아이템을 표시합니다"
+  
+  give:
+    player: "<prefix><#43c9fa><player><#b8bbc2>님께 <reset><pet-name></reset><#b8bbc2>을(를)
+      지급했습니다."
+    target: "<prefix><#d15335><player><#b8bbc2>님이 당신에게 <reset><pet-name></reset><#b8bbc2>을(를)
+      지급했습니다."
+  
+  take:
+    player: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) <#43c9fa><player><#b8bbc2>님에게서
+      회수했습니다."
+    target: "<prefix><#d15335><player><#b8bbc2>님이 당신의 <reset><pet-name></reset><#b8bbc2>을(를)
+      회수했습니다."

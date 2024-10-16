@@ -1,0 +1,10 @@
+name: FantasticPets
+main: kr.jimin.fantasticpets.FantasticPetsPlugin
+version: '${version}'
+api-version: 1.20
+author: Jimin
+softdepend:
+  - PlaceholderAPI
+
+depend:
+  - MCPets
