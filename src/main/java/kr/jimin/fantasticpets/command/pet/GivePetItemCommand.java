@@ -9,20 +9,18 @@ import kr.jimin.fantasticpets.FantasticPetsPlugin;
 import kr.jimin.fantasticpets.util.pet.PetsFileManager;
 import org.bukkit.entity.Player;
 
-public class PetGiveItemCommand {
+public class GivePetItemCommand {
     private final FantasticPetsPlugin plugin;
 
-    public PetGiveItemCommand(FantasticPetsPlugin plugin) {
+    public GivePetItemCommand(FantasticPetsPlugin plugin) {
         this.plugin = plugin;
     }
 
     public CommandAPICommand getGivePetItemCommand() {
         return new CommandAPICommand("item")
-                .withArguments(
-                        new PlayerArgument("player"),
-                        new StringArgument("item").replaceSuggestions(ArgumentSuggestions.strings(sender -> PetsFileManager.getPIList(plugin).toArray(new String[0]))),
-                        new IntegerArgument("amount").setOptional(true).replaceSuggestions(ArgumentSuggestions.strings("1"))
-                )
+                .withArguments(new PlayerArgument("player"))
+                .withArguments(new StringArgument("item").replaceSuggestions(ArgumentSuggestions.strings(sender -> PetsFileManager.getPIList(plugin).toArray(new String[0]))))
+                .withOptionalArguments(new IntegerArgument("amount").replaceSuggestions(ArgumentSuggestions.strings("1")))
                 .executes((sender, args) -> {
 
                     Player player = (Player) args.get("player");

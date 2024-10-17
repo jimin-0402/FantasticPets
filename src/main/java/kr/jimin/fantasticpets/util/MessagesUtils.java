@@ -14,14 +14,6 @@ public class MessagesUtils {
 
     public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-    /*private static final TagResolver pluginTagResolver = TagResolver.resolver(
-            TagResolver.standard(),
-            TagResolver.resolver(
-                    "prefix",
-                    Tag.selfClosingInserting(MINI_MESSAGE.deserialize(Message.PREFIX.toString()))
-            )
-    );*/
-
     public static final TagResolver FurryFriendsTagResolver = TagResolver.resolver(TagResolver.standard(),
             TagResolver.resolver("prefix", Tag.selfClosingInserting(MINI_MESSAGE.deserialize(Message.PREFIX.toString())))
     );

@@ -8,7 +8,6 @@ public class ReloadCommand {
 
     public CommandAPICommand getReloadCommand() {
         return new CommandAPICommand("reload")
-                .withAliases("rl")
                 .executes((sender, args) -> {
                     FantasticPetsPlugin.get().reloadConfigs();
                     Message.RELOAD.send(sender);

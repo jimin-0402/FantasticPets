@@ -42,10 +42,8 @@ public enum ClickType {
 
     public static boolean isValidClickType(PlayerInteractEvent event, String clickTypeConfig, Player player) {
         ClickType clickType = fromString(clickTypeConfig);
-        if (clickType == null) return false;
+        if (clickType == null) return true;
 
-        // if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) return false;
-
-        return isClickTypeValid(event.getAction(), player.isSneaking(), clickType);
+        return !isClickTypeValid(event.getAction(), player.isSneaking(), clickType);
     }
 }

@@ -22,6 +22,9 @@ pet:
     acquired: "<prefix><reset><pet-name></reset><#b8bbc2>을(를)획득하였습니다."
     acquired-category: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
       획득하였습니다."
+  without:
+    main: "<prefix><#b8bbc2>등록된 펫이 존재하지 않거나, 사용가능한 펫이 존재하지 않습니다."
+    pet: "<prefix><#b8bbc2>사용이 불가능합니다."
   not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2>은(는) 등록된 펫이 아닙니다."
 
 command:

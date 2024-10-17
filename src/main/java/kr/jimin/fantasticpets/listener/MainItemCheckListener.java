@@ -28,7 +28,7 @@ public class MainItemCheckListener implements Listener {
 
         String clickTypeConfig = Config.SETTING_CLICK_TYPE.toString();
         if (clickTypeConfig.isEmpty()) clickTypeConfig = "RIGHT";
-        if (!ClickType.isValidClickType(event, clickTypeConfig, player)) return;
+        if (ClickType.isValidClickType(event, clickTypeConfig, player)) return;
 
         if (mainItem.getType() == Material.AIR) return;
 
@@ -45,6 +45,7 @@ public class MainItemCheckListener implements Listener {
         if (mainItem.isSimilar(customItem)) {
             PetsUtils.randomGetPet(plugin, player, customItem);
             SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
+            event.setCancelled(true);
         }
     }
 }

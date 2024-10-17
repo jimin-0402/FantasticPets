@@ -23,9 +23,12 @@ public enum Message {
     PET_HAS_TARGET("pet.ownership.has-target"),
     PET_HAS_NOT("pet.ownership.has-not"),
     PET_HAS_ALL("pet.ownership.has-all"),
-    PET_NOT_FOUND("pet.not-found"),
     PET_ACQUIRED("pet.acquired.acquired"),
     PET_ACQUIRED_CATEGORY("pet.acquired.acquired-category"),
+    PET_WITHOUT_MAIN("pet.without.main"),
+    PET_WITHOUT_PET("pet.without.pet"),
+    PET_NOT_FOUND("pet.not-found"),
+
 
     // Command Messages
     COMMAND_HELP("command.help"),

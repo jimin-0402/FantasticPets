@@ -12,37 +12,6 @@ import java.io.IOException;
 
 public class YamlUtils extends YamlConfiguration {
 
-//    public static boolean isValidYaml(File file) {
-//        YamlConfiguration config = new YamlConfiguration();
-//        try {
-//            config.load(file);
-//            return true;
-//        } catch (InvalidConfigurationException e) {
-//            Logs.logError("Error loading YAML configuration file: " + file.getPath());
-//            Logs.logError("Ensure that your config is formatted correctly:");
-//            Logs.logWarning(e.getMessage());
-//            return false;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
-
-    public static boolean create(File file) {
-        if (file.exists()) return false;
-
-        File parent = file.getParentFile();
-        if (parent == null) return false;
-
-        parent.mkdirs();
-        try {
-            return file.createNewFile();
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
-            return false;
-        }
-    }
-
     @NotNull
     public static YamlConfiguration loadConfiguration(@NotNull File file) throws RuntimeException {
         YamlConfiguration config = new YamlConfiguration();

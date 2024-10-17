@@ -148,12 +148,8 @@ public class PetsUtils {
 
     public static void randomGetPet(FantasticPetsPlugin plugin, Player player, ItemStack item) {
         List<String> playerPets = getPlayerPets(player);
-        List<String> allPets = getAllPets();
 
-        if (playerPets.containsAll(allPets)) {
-            Message.PET_HAS_ALL.send(player);
-            return;
-        }
+        isAllPets(player);
 
         boolean duplication = Config.PET_DUPLICATION.toBool();
         List<String> enabledPets = PetsFileManager.getPIList(plugin);
@@ -161,6 +157,7 @@ public class PetsUtils {
 
         petId = getRandomPetId(plugin, playerPets, enabledPets, duplication);
         if (petId == null) {
+            Message.PET_WITHOUT_MAIN.send(player);
             return;
         }
 
