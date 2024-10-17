@@ -18,9 +18,11 @@ pet:
     has-not: "<prefix><#43c9fa><player><#b8bbc2>님은 <reset><pet-name></reset><#b8bbc2>을(를)
       소유하고 있지 않습니다."
     has-all: "<prefix><#b8bbc2>모든 펫을 소유하고 있습니다."
+  acquired:
+    acquired: "<prefix><reset><pet-name></reset><#b8bbc2>을(를)획득하였습니다."
+    acquired-category: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
+      획득하였습니다."
   not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2>은(는) 등록된 펫이 아닙니다."
-  acquired: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
-    획득하였습니다."
 
 command:
   help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/fantasticpets\

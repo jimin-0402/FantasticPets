@@ -29,7 +29,7 @@ public class PetsFileManager {
         return items.containsKey(petItemId) ? items.get(petItemId) : loadPIFromFile(plugin, petItemId);
     }
 
-    private static ItemStack loadPIFromFile(FantasticPetsPlugin plugin, String petItemsID) {
+    /*private static ItemStack loadPIFromFile(FantasticPetsPlugin plugin, String petItemsID) {
         File file = new File(plugin.getDataFolder(), "Pets/" + petItemsID + ".yml");
 
         if (!file.exists()) return null;
@@ -46,7 +46,38 @@ public class PetsFileManager {
 
         ItemUtils itemUtils = ItemHandler.create(material, displayName, lore, amount, customModelData);
         return itemUtils != null ? itemUtils.getItem() : null;
+    }*/
+
+    private static ItemStack loadPIFromFile(FantasticPetsPlugin plugin, String petItemsID) {
+        File file = new File(plugin.getDataFolder(), "Pets/" + petItemsID + ".yml");
+
+        if (!file.exists()) {
+            System.out.println("File does not exist: " + file.getPath());
+            return null;
+        }
+
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        boolean isEnable = config.getBoolean("enable", false);
+        if (!isEnable) {
+            System.out.println("Pet item is not enabled: " + petItemsID);
+            return null;
+        }
+
+        String material = config.getString("item.material", "STONE");
+        int amount = config.getInt("item.amount", 1);
+        String displayName = config.getString("item.display_name", petItemsID);
+        List<String> lore = config.getStringList("item.lore");
+        int customModelData = config.getInt("item.custom_model_data", 0);
+
+        ItemUtils itemUtils = ItemHandler.create(material, displayName, lore, amount, customModelData);
+        if (itemUtils == null) {
+            System.out.println("ItemUtils creation failed for: " + petItemsID);
+            return null;
+        }
+
+        return itemUtils.getItem();
     }
+
 
 /*    public static void reloadPetItems(FantasticPetsPlugin plugin) {
         items.clear();
@@ -114,7 +145,7 @@ public class PetsFileManager {
         return null;
     }
 
-    private static boolean matchesFile(ItemStack item, File file) {
+    /*private static boolean matchesFile(ItemStack item, File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         boolean isEnabled = config.getBoolean("enable", false);
@@ -130,7 +161,26 @@ public class PetsFileManager {
         ItemStack createdItem = itemUtils.getItem();
         
         return item.isSimilar(createdItem);
+    }*/
+
+    private static boolean matchesFile(ItemStack item, File file) {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        boolean isEnabled = config.getBoolean("enable", false);
+        if (!isEnabled) return false;
+
+        String material = config.getString("item.material", "STONE");
+        String displayName = config.getString("item.display_name");
+        List<String> lore = config.getStringList("item.lore");
+        int customModelData = config.getInt("item.custom_model_data", 0);
+
+        ItemUtils itemUtils = ItemHandler.create(material, displayName, lore, 1, customModelData);
+        assert itemUtils != null;
+        ItemStack createdItem = itemUtils.getItem();
+
+        return item.isSimilar(createdItem);
     }
+
 
     public static String getRandomItemsID(FantasticPetsPlugin plugin) {
         if (items.isEmpty()) {

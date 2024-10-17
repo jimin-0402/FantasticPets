@@ -5,7 +5,8 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import kr.jimin.fantasticpets.command.CommandsManager;
 import kr.jimin.fantasticpets.command.TestCommand;
 import kr.jimin.fantasticpets.config.ConfigsManager;
-import kr.jimin.fantasticpets.listener.ItemCheckListener;
+import kr.jimin.fantasticpets.listener.MainItemCheckListener;
+import kr.jimin.fantasticpets.listener.PetItemCheckListener;
 import kr.jimin.fantasticpets.util.pet.PetsFileManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,7 +40,8 @@ public class FantasticPetsPlugin extends JavaPlugin {
         new CommandsManager(this).loadCommands();
         new TestCommand(this).loadCommands();
 
-        getServer().getPluginManager().registerEvents(new ItemCheckListener(this), this);
+        getServer().getPluginManager().registerEvents(new MainItemCheckListener(this), this);
+        getServer().getPluginManager().registerEvents(new PetItemCheckListener(this), this);
     }
 
     @Override

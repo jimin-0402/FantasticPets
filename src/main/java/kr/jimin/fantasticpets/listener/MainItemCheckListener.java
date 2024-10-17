@@ -14,25 +14,23 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
-public class ItemCheckListener implements Listener {
+public class MainItemCheckListener implements Listener {
     private final FantasticPetsPlugin plugin;
 
-    public ItemCheckListener(FantasticPetsPlugin plugin) {
+    public MainItemCheckListener(FantasticPetsPlugin plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     private void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemStack mainItem = player.getInventory().getItemInMainHand();
 
         String clickTypeConfig = Config.SETTING_CLICK_TYPE.toString();
         if (clickTypeConfig.isEmpty()) clickTypeConfig = "RIGHT";
-        if (!ClickType.isValidClickType(event,clickTypeConfig, player)) return;
+        if (!ClickType.isValidClickType(event, clickTypeConfig, player)) return;
 
-        if (item.getType() == Material.AIR) return;
-
-        player.sendMessage("abc");
+        if (mainItem.getType() == Material.AIR) return;
 
         ItemStack customItem = Objects.requireNonNull(ItemHandler.create(
                 Config.PET_ITEM_MATERIAL.toString(),
@@ -43,10 +41,8 @@ public class ItemCheckListener implements Listener {
         )).getItem();
 
         if (customItem == null) return;
-        player.sendMessage("abc2");
 
-        if (item.isSimilar(customItem)) {
-            player.sendMessage("abc3");
+        if (mainItem.isSimilar(customItem)) {
             PetsUtils.randomGetPet(plugin, player, customItem);
             SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
         }

@@ -11,7 +11,6 @@ import kr.jimin.fantasticpets.util.LuckPermsUtils;
 import kr.jimin.fantasticpets.util.MessagesUtils;
 import kr.jimin.fantasticpets.util.SoundsUtils;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
@@ -60,7 +59,9 @@ public class PetsUtils {
     }
 
     private static FileConfiguration getPetConfigFromId(String id) {
-        return PetConfig.getConfig(id).getConfig();
+        PetConfig petConfig = PetConfig.getConfig(id);
+        if (petConfig == null) return null;
+        return petConfig.getConfig();
     }
 
     public static String getPetNameFromId(String id) {
@@ -135,11 +136,20 @@ public class PetsUtils {
         return false;
     }
 
+    public static Component getCategory(String petId) {
+        String petCategoryId = getCategoryOfPet(petId);
+        if (petCategoryId == null || petCategoryId.isEmpty()) return null;
+
+        String petCategoryName = getCategoryNameById(petCategoryId);
+        if (petCategoryName == null) return null;
+
+        return MessagesUtils.processMessage(petCategoryName);
+    }
+
     public static void randomGetPet(FantasticPetsPlugin plugin, Player player, ItemStack item) {
         List<String> playerPets = getPlayerPets(player);
         List<String> allPets = getAllPets();
 
-        // 모든 펫을 이미 보유하고 있는지 확인
         if (playerPets.containsAll(allPets)) {
             Message.PET_HAS_ALL.send(player);
             return;
@@ -147,58 +157,59 @@ public class PetsUtils {
 
         boolean duplication = Config.PET_DUPLICATION.toBool();
         List<String> enabledPets = PetsFileManager.getPIList(plugin);
-        int registeredPets = enabledPets.size();
-
         String petId = null;
 
-        if (duplication) {
-            for (int attempt = 0; attempt < registeredPets; attempt++) {
-                petId = PetsFileManager.getRandomItemsID(plugin);
-                if (petId != null && !playerPets.contains(petId) && enabledPets.contains(petId)) {
-                    break;
-                }
-            }
-        } else {
-            petId = PetsFileManager.getRandomItemsID(plugin);
-            if (petId != null && !enabledPets.contains(petId)) {
-                player.sendMessage("Selected pet is not enabled.");
-                return;
-            }
-        }
-
-        if (petId == null || (duplication && playerPets.contains(petId))) {
-            player.sendMessage("No valid pet ID found.");
+        petId = getRandomPetId(plugin, playerPets, enabledPets, duplication);
+        if (petId == null) {
             return;
         }
 
-        player.sendMessage("abc4"); // 이 메시지가 출력되어야 함
-
-        String petName = getPetNameFromId(petId);
         ItemStack petItem = PetsFileManager.loadPetItems(plugin, petId);
-
         if (petItem == null) {
-            player.sendMessage("Pet item is null."); // 디버깅 메시지 추가
             return;
         }
 
         player.getInventory().addItem(petItem);
         player.getInventory().removeItem(item);
 
-        Component isCategory = getCategory(petId);
-
-        Message.PET_ACQUIRED.send(player,
-                MessagesUtils.tagResolver("pet-name", petName),
-                MessagesUtils.tagResolver("category-name", getCategory(petId)),
-                MessagesUtils.tagResolver("category-prefix", MessagesUtils.processMessage(Message.PET_CATEGORY_PREFIX.toString()))
-        );
-
-        Config.SOUND_SUCCESS.toStringList().forEach(soundConfig -> {
-            List<String> soundData = List.of(soundConfig.split(","));
-            SoundsUtils.playSound(player, soundData);
-        });
+        getCategoryMessage(player, petId);
+        SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
     }
 
+    private static String getRandomPetId(FantasticPetsPlugin plugin, List<String> playerPets, List<String> enabledPets, boolean duplication) {
+        if (duplication) {
+            for (int attempt = 0; attempt < enabledPets.size(); attempt++) {
+                String petId = PetsFileManager.getRandomItemsID(plugin);
+                if (petId != null && !playerPets.contains(petId) && enabledPets.contains(petId)) {
+                    return petId;
+                }
+            }
+        } else {
+            String petId = PetsFileManager.getRandomItemsID(plugin);
+            if (petId != null && enabledPets.contains(petId)) {
+                return petId;
+            }
+        }
+        return null;
+    }
 
+    public static void getCategoryMessage(Player player, String petId) {
+        String petName = getPetNameFromId(petId);
+        Component categoryComponent = getCategory(petId);
+
+        if (Config.PET_USE_CATEGORY.toBool()) {
+            if (categoryComponent == null) {
+                Message.PET_ACQUIRED.send(player, MessagesUtils.tagResolver("pet-name", petName));
+                return;
+            }
+            Message.PET_ACQUIRED_CATEGORY.send(player,
+                    MessagesUtils.tagResolver("pet-name", petName),
+                    MessagesUtils.tagResolver("category-name", categoryComponent),
+                    MessagesUtils.tagResolver("category-prefix", MessagesUtils.processMessage(Message.PET_CATEGORY_PREFIX.toString())));
+        } else {
+            Message.PET_ACQUIRED.send(player, MessagesUtils.tagResolver("pet-name", petName));
+        }
+    }
 
     public static void addPetsPermPlayer(Player player, String petId) {
         User user = LuckPermsUtils.getLuckPermsUser(player);
@@ -220,10 +231,4 @@ public class PetsUtils {
         LuckPermsProvider.get().getUserManager().saveUser(user);
     }
 
-    public static Component getCategory(String petId) {
-        String petCategoryId = getCategoryOfPet(petId);
-        String petCategoryName = getCategoryNameById(petCategoryId);
-        assert petCategoryName != null;
-        return MessagesUtils.processMessage(petCategoryName);
-    }
 }

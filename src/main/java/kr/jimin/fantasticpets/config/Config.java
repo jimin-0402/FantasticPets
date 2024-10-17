@@ -19,6 +19,7 @@ public enum Config {
 
     // pet
     PET_DUPLICATION("Pet.duplication"),
+    PET_USE_CATEGORY("Pet.use-category"),
     PET_ITEM_MATERIAL("Pet.item.material"),
     PET_ITEM_NAME("Pet.item.display-name"),
     PET_ITEM_LORE("Pet.item.lore"),
