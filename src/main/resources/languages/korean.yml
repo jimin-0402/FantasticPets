@@ -53,4 +53,4 @@ command:
 logs:
   date: "yyyy-MM-dd HH:mm:ss"
   command: "[<date>] [<type>] [user: <player-name>(<player-id>)] [admin: <admin-name>] [pet/item: <pet-id>] [amount: <amount>]"
-  user:
+  user: "[<date>] [user: <player-name>(<player-id>)] [pet/item: <pet-id>]"

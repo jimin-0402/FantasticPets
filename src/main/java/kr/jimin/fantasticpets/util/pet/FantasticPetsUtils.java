@@ -6,6 +6,7 @@ import kr.jimin.fantasticpets.config.Message;
 import kr.jimin.fantasticpets.util.LuckPermsUtils;
 import kr.jimin.fantasticpets.util.MessagesUtils;
 import kr.jimin.fantasticpets.util.SoundsUtils;
+import kr.jimin.fantasticpets.util.logs.LogsManager;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -78,6 +79,7 @@ public class FantasticPetsUtils {
 
         getCategoryMessage(plugin, player, petId, true);
         SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
+        new LogsManager(plugin).logUser(player.getName(), petId);
     }
 
     public static void getCategoryMessage(FantasticPetsPlugin plugin, Player player, String petId, boolean sendChance) {
@@ -183,4 +185,5 @@ public class FantasticPetsUtils {
 
         return false;
     }
+
 }

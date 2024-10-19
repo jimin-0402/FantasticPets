@@ -73,6 +73,7 @@ public class LogsManager {
         if (playerId != null) {
             log = log.replace("<player-id>", playerId.toString());
         }
+
         if (amount != null) {
             log = log.replace("<amount>", amount);
         }
@@ -80,12 +81,20 @@ public class LogsManager {
         writeLogToFile(new File(getServerLogFolder(), COMMAND_LOG_FILENAME), log);
     }
 
-    public void logUser(String playerName, String petName) {
+    public void logUser(String playerName, String petId) {
+        Player player = Bukkit.getPlayer(playerName);
+        UUID playerId = (player != null) ? player.getUniqueId() : null;
+
         String timestamp = getCurrentTimestamp();
+
         String logEntry = Message.LOGS_USER.toString()
-                .replace("<player>", playerName)
-                .replace("<pet>", petName)
-                .replace("<date>", timestamp);
+                .replace("<date>", timestamp)
+                .replace("<player-name>", playerName)
+                .replace("<pet-id>", petId);
+
+        if (playerId != null) {
+            logEntry = logEntry.replace("<player-id>", playerId.toString());
+        }
 
         writeLogToFile(new File(getServerLogFolder(), USER_LOG_FILENAME), logEntry);
     }
