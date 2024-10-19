@@ -26,7 +26,7 @@ public class GivePetCommand {
                 .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
                     Player player = (Player) info.previousArgs().get("player");
                     return PetsUtils.getPlayerPets(player).toArray(new String[0]);
-                }))
+                })))
                 .executes((sender, args) -> {
                     Player player = (Player) args.get("player");
                     if (player == null) {
@@ -55,6 +55,6 @@ public class GivePetCommand {
                     if (Config.SETTING_LOG.toBool()) {
                         new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), petId + "/Pet", "1");
                     }
-                }));
+                });
     }
 }

@@ -4,11 +4,7 @@ import fr.nocsy.mcpets.api.MCPetsAPI;
 import fr.nocsy.mcpets.data.Category;
 import fr.nocsy.mcpets.data.Pet;
 import fr.nocsy.mcpets.data.config.PetConfig;
-import kr.jimin.fantasticpets.FantasticPetsPlugin;
-import kr.jimin.fantasticpets.config.Config;
-import kr.jimin.fantasticpets.config.Message;
 import kr.jimin.fantasticpets.util.MessagesUtils;
-import kr.jimin.fantasticpets.util.SoundsUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -104,7 +100,7 @@ public class PetsUtils {
         return category != null ? category.getDisplayName() : null;
     }
 
-    public static Component getCategory(String petId) {
+    public static Component getCategoryNameByPetId(String petId) {
         String petCategoryId = getCategoryOfPet(petId);
         if (petCategoryId == null || petCategoryId.isEmpty()) return null;
 

@@ -1,5 +1,3 @@
-config-version: 1
-
 general:
   prefix: "<gradient:#FC5C7D:#6A82FB>FantasticPets</gradient> <gray>| "
   messages:
@@ -32,11 +30,17 @@ pet:
   already-owned: "<prefix><#b8bbc2>당신은 이미 <reset><pet-name></reset><#b8bbc2>을(를) 소유하고 있습니다."
 
 command:
-  help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/fantasticpets\
-    \ reload><#6f737d>/fp <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> 플러그인\
-    을 리로드합니다 \n<hover:show_text:\"<gray>인벤토리 명령어\"><click:SUGGEST_COMMAND:/oraxen\
-    \ inv><#6f737d>/o <#b8bbc2>인벤토리</click></hover>  <#6f737d>»<#b8bbc2> 인벤토리에 있는\
-    \ Oraxen 아이템을 표시합니다"
+  help: "<prefix><#b8bbc2>사용 가능한 명령어 
+    \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/fantasticpets reload>
+      <#6f737d>/fp <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> 플러그인을 리로드합니다.
+    \n<hover:show_text:\"<gray>메인아이템 지급 명령어\"><click:SUGGEST_COMMAND:/fantasticpets item >
+      <#6f737d>/fp <#b8bbc2>item <#43c9fa>target <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> 메인아이템을 지급합니다.
+    \n<hover:show_text:\"<gray>펫 지급 명령어\"><click:SUGGEST_COMMAND:/fantasticpets pet give >
+      <#6f737d>/fp <#b8bbc2>pet give <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> 펫을 지급합니다.
+    \n<hover:show_text:\"<gray>펫 회수 명령어\"><click:SUGGEST_COMMAND:/fantasticpets pet take >
+      <#6f737d>/fp <#b8bbc2>pet take <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> 펫을 회수합니다.
+    \n<hover:show_text:\"<gray>펫아이템 지급 명령어\"><click:SUGGEST_COMMAND:/fantasticpets pet item >
+      <#6f737d>/fp <#b8bbc2>pet item <#43c9fa>target <#fa4362>item <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> 아이템을 지급합니다."
 
   give:
     player: "<prefix><#43c9fa><player><#b8bbc2>님께 <reset><pet-name></reset><#b8bbc2>을(를)

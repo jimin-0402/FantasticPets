@@ -84,7 +84,7 @@ public class FantasticPetsUtils {
 
     public static void getCategoryMessage(FantasticPetsPlugin plugin, Player player, String petId, boolean sendChance) {
         String petName = PetsUtils.getPetNameFromId(petId);
-        Component categoryComponent = PetsUtils.getCategory(petId);
+        Component categoryComponent = PetsUtils.getCategoryNameByPetId(petId);
         boolean useChance = Config.PET_USE_CHANCE.toBool();
 
         double chance = useChance ? PetsFileManager.getChance(plugin, petId) : 0.0;
