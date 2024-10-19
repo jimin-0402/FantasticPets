@@ -13,20 +13,17 @@ import kr.jimin.fantasticpets.util.pet.FantasticPetsUtils;
 import kr.jimin.fantasticpets.util.pet.PetsUtils;
 import org.bukkit.entity.Player;
 
-public class GivePetCommand {
+public class TakePetCommand {
     private final FantasticPetsPlugin plugin;
 
-    public GivePetCommand(FantasticPetsPlugin plugin) {
+    public TakePetCommand(FantasticPetsPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public CommandAPICommand getGivePetCommand() {
-        return new CommandAPICommand("give")
+    public CommandAPICommand getTakePetCommand() {
+        return new CommandAPICommand("take")
                 .withArguments(new PlayerArgument("player"))
-                .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
-                    Player player = (Player) info.previousArgs().get("player");
-                    return PetsUtils.getPlayerPets(player).toArray(new String[0]);
-                }))
+                .withArguments(new StringArgument("pet").replaceSuggestions(ArgumentSuggestions.strings((context) -> PetsUtils.getAllPets().toArray(new String[0]))))
                 .executes((sender, args) -> {
                     Player player = (Player) args.get("player");
                     if (player == null) {
@@ -41,20 +38,21 @@ public class GivePetCommand {
                     }
 
                     String petPerm = PetsUtils.getPetPermFromId(petId);
-                    if (petPerm != null && player.hasPermission(petPerm)) {
-                        Message.PET_HAS_TARGET.send(sender, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", player.getName()));
+                    if (petPerm != null && !player.hasPermission(petPerm)) {
+                        Message.PET_HAS_NOT.send(sender, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", player.getName()));
                         return;
                     }
 
-                    FantasticPetsUtils.addPetsPermPlayer(player, petId);
+                    FantasticPetsUtils.removePetsPermPlayer(player, petId);
 
-                    Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", player.getName()));
-                    if (!Message.COMMAND_GIVE_TARGET.toString().isEmpty()) {
-                        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", sender.getName()));
+                    Message.COMMAND_TAKE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", player.getName()));
+
+                    if (!Message.COMMAND_TAKE_TARGET.toString().isEmpty()) {
+                        Message.COMMAND_TAKE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", sender.getName()));
                     }
                     if (Config.SETTING_LOG.toBool()) {
-                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), petId + "/Pet");
+                        new LogsManager(plugin).commandLog("take", player.getName(), player.getName(), petId + "/Pet");
                     }
-                }));
+                });
     }
 }

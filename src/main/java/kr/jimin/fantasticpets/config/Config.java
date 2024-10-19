@@ -16,6 +16,7 @@ public enum Config {
     // plugin
     SETTING_LANGUAGE("Setting.language"),
     SETTING_CLICK_TYPE("Setting.cluck-type"),
+    SETTING_LOG("Setting.log"),
 
     // pet
     PET_DUPLICATION("Pet.duplication"),
@@ -26,8 +27,8 @@ public enum Config {
     PET_ITEM_MODEL_DATA("Pet.item.model-data"),
 
     // sound
-    SOUND_SUCCESS("sound.success"),
-    SOUND_FAIL("sound.fail");
+    SOUND_SUCCESS("Sound.success"),
+    SOUND_FAIL("Sound.fail");
 
     private final String path;
 
@@ -59,7 +60,7 @@ public enum Config {
     }
 
     public Component toComponent() {
-        return MessagesUtils.MINI_MESSAGE_WITH_TAGS.deserialize(getValue().toString());
+        return MessagesUtils.processMessage(getValue().toString());
     }
 
     public Boolean toBool() {

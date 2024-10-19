@@ -35,7 +35,11 @@ public enum Message {
     COMMAND_GIVE_PLAYER("command.give.player"),
     COMMAND_GIVE_TARGET("command.give.target"),
     COMMAND_TAKE_PLAYER("command.take.player"),
-    COMMAND_TAKE_TARGET("command.take.target");
+    COMMAND_TAKE_TARGET("command.take.target"),
+
+    LOGS_DATE("logs.date"),
+    LOGS_COMMAND("logs.command"),
+    LOGS_USER("logs.user");
 
     private final String path;
 

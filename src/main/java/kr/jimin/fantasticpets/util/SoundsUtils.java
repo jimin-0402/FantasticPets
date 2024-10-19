@@ -14,8 +14,8 @@ public class SoundsUtils {
         if (soundData.length < 3) return;
 
         String soundName = soundData[0].trim();
-        String volumeString = soundData[1].trim().replaceAll("/]$", ""); // remove suffix "]"
-        String pitchString = soundData[2].trim().replaceAll("/]$", ""); // remove suffix "]"
+        String volumeString = soundData[1].trim().replaceAll("/]$", "");
+        String pitchString = soundData[2].trim().replaceAll("/]$", "");
 
         Float volume = parseFloatOrNull(volumeString);
         Float pitch = parseFloatOrNull(pitchString);

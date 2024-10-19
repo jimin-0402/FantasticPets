@@ -6,6 +6,9 @@ import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
+import kr.jimin.fantasticpets.config.Config;
+import kr.jimin.fantasticpets.util.logs.LogsManager;
+import kr.jimin.fantasticpets.util.pet.FantasticPetsUtils;
 import kr.jimin.fantasticpets.util.pet.PetsFileManager;
 import org.bukkit.entity.Player;
 
@@ -27,7 +30,10 @@ public class GivePetItemCommand {
                     String id = (String) args.get("item");
                     int amount = ((Number) args.getOrDefault("amount", 1)).intValue();
 
-                    PetsFileManager.giveItem(plugin, sender, player, id, amount);
+                    FantasticPetsUtils.giveItem(plugin, sender, player, id, amount);
+                    if (Config.SETTING_LOG.toBool()) {
+                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), id + "/Item");
+                    }
                 });
     }
 }

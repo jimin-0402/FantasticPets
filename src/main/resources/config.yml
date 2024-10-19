@@ -3,23 +3,23 @@ debug: false
 Setting:
   language: "korean"
   cluck-type: RIGHT
+  log: true
 
 Pet:
   duplication: true
   use-category: true
 
   item:
-    material: "diamond_sword"
-    display-name: "강력한 검"
+    material: ENCHANTED_BOOK
+    display-name: "&7&l펫 뽑기권"
     lore:
-      - "이 검은 전설의 아이템입니다."
-    model-data: 123
+      - "  &8[설명] &7사용 시 해당 펫을 획득합니다."
+      - "  &8[사용] "
+    model-data: -1
 
 Sound:
   # sound setting: "soundName, volume, pitch"
   success:
-    - "minecraft:ui.toast.challenge_complete, 1, 1"
     - "minecraft:entity.player.levelup, 1, 1"
   fail:
     - "minecraft:ui.button.click, 1, 1"
-    - "minecraft:entity.player.hurt, 1, 1"

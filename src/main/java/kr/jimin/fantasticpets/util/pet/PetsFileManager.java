@@ -125,17 +125,4 @@ public class PetsFileManager {
         return petIds.isEmpty() ? null : petIds.get(new Random().nextInt(petIds.size()));
     }
 
-    public static void giveItem(FantasticPetsPlugin plugin, CommandSender sender, Player player, String petId, int amount) {
-        ItemStack iS = loadPetItems(plugin, petId);
-
-        if (iS == null) {
-            Message.PET_NOT_FOUND.send(sender, MessagesUtils.tagResolver("pet-name", petId));
-            return;
-        }
-
-        iS.setAmount(amount);
-        player.getInventory().addItem(iS);
-        Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", PetsUtils.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", player.displayName()));
-        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", PetsUtils.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", sender.name()));
-    }
 }

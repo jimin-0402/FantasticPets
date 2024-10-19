@@ -116,11 +116,6 @@ public class PetsUtils {
             if (message) {
                 Message.PET_HAS.send(player, MessagesUtils.tagResolver("pet-name", petName));
             }
-            Config.SOUND_FAIL.toStringList().forEach(soundConfig -> {
-                List<String> soundData = List.of(soundConfig.split(","));
-                SoundsUtils.playSound(player, soundData);
-            });
-
             return true;
         }
         return false;
@@ -146,34 +141,7 @@ public class PetsUtils {
         return MessagesUtils.processMessage(petCategoryName);
     }
 
-    public static void randomGetPet(FantasticPetsPlugin plugin, Player player, ItemStack item) {
-        List<String> playerPets = getPlayerPets(player);
-
-        isAllPets(player);
-
-        boolean duplication = Config.PET_DUPLICATION.toBool();
-        List<String> enabledPets = PetsFileManager.getPIList(plugin);
-        String petId = null;
-
-        petId = getRandomPetId(plugin, playerPets, enabledPets, duplication);
-        if (petId == null) {
-            Message.PET_WITHOUT_MAIN.send(player);
-            return;
-        }
-
-        ItemStack petItem = PetsFileManager.loadPetItems(plugin, petId);
-        if (petItem == null) {
-            return;
-        }
-
-        player.getInventory().addItem(petItem);
-        player.getInventory().removeItem(item);
-
-        getCategoryMessage(player, petId);
-        SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
-    }
-
-    private static String getRandomPetId(FantasticPetsPlugin plugin, List<String> playerPets, List<String> enabledPets, boolean duplication) {
+    static String getRandomPetId(FantasticPetsPlugin plugin, List<String> playerPets, List<String> enabledPets, boolean duplication) {
         if (duplication) {
             for (int attempt = 0; attempt < enabledPets.size(); attempt++) {
                 String petId = PetsFileManager.getRandomItemsID(plugin);
@@ -189,43 +157,4 @@ public class PetsUtils {
         }
         return null;
     }
-
-    public static void getCategoryMessage(Player player, String petId) {
-        String petName = getPetNameFromId(petId);
-        Component categoryComponent = getCategory(petId);
-
-        if (Config.PET_USE_CATEGORY.toBool()) {
-            if (categoryComponent == null) {
-                Message.PET_ACQUIRED.send(player, MessagesUtils.tagResolver("pet-name", petName));
-                return;
-            }
-            Message.PET_ACQUIRED_CATEGORY.send(player,
-                    MessagesUtils.tagResolver("pet-name", petName),
-                    MessagesUtils.tagResolver("category-name", categoryComponent),
-                    MessagesUtils.tagResolver("category-prefix", MessagesUtils.processMessage(Message.PET_CATEGORY_PREFIX.toString())));
-        } else {
-            Message.PET_ACQUIRED.send(player, MessagesUtils.tagResolver("pet-name", petName));
-        }
-    }
-
-    public static void addPetsPermPlayer(Player player, String petId) {
-        User user = LuckPermsUtils.getLuckPermsUser(player);
-        String petPerm = getPetPermFromId(petId);
-        if (petPerm != null) {
-            Node node = Node.builder(petPerm).build();
-            user.data().add(node);
-        }
-        LuckPermsProvider.get().getUserManager().saveUser(user);
-    }
-
-    public static void removePetsPermPlayer(Player player, String petId) {
-        User user = LuckPermsUtils.getLuckPermsUser(player);
-        String petPerm = getPetPermFromId(petId);
-        if (petPerm != null) {
-            Node node = Node.builder(petPerm).build();
-            user.data().remove(node);
-        }
-        LuckPermsProvider.get().getUserManager().saveUser(user);
-    }
-
 }

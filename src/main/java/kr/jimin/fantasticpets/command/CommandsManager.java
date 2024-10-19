@@ -19,7 +19,7 @@ public class CommandsManager {
                 .withSubcommands(
                         (new PetCommand(plugin)).getPetCommand(),
                         (new ReloadCommand()).getReloadCommand(),
-                        (new GiveItemCommand()).getGiveItemCommand()
+                        (new GiveItemCommand(plugin)).getGiveItemCommand()
 
                 )
                 .executes((sender, args) -> {

@@ -4,6 +4,7 @@ import dev.jorel.commandapi.CommandAPICommand;
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
 import kr.jimin.fantasticpets.command.pet.GivePetCommand;
 import kr.jimin.fantasticpets.command.pet.GivePetItemCommand;
+import kr.jimin.fantasticpets.command.pet.TakePetCommand;
 import kr.jimin.fantasticpets.config.Message;
 
 public class PetCommand {
@@ -17,7 +18,8 @@ public class PetCommand {
         return new CommandAPICommand("pet")
                 .withSubcommands(
                         (new GivePetItemCommand(plugin)).getGivePetItemCommand(),
-                        (new GivePetCommand(plugin)).getGivePetCommand()
+                        (new GivePetCommand(plugin)).getGivePetCommand(),
+                        (new TakePetCommand(plugin)).getTakePetCommand()
                 )
                 .executes((sender, args) -> {
                     Message.COMMAND_HELP.send(sender);
