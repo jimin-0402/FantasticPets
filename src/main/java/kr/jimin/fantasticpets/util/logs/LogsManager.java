@@ -50,7 +50,7 @@ public class LogsManager {
         }
     }
 
-    public void commandLog(String type, String adminName, String playerName, String petId) {
+    public void commandLog(String type, String adminName, String playerName, String petId, String amount) {
         Player player = Bukkit.getPlayer(playerName);
         UUID playerId = (player != null) ? player.getUniqueId() : null;
 
@@ -72,6 +72,9 @@ public class LogsManager {
 
         if (playerId != null) {
             log = log.replace("<player-id>", playerId.toString());
+        }
+        if (amount != null) {
+            log = log.replace("<amount>", amount);
         }
 
         writeLogToFile(new File(getServerLogFolder(), COMMAND_LOG_FILENAME), log);

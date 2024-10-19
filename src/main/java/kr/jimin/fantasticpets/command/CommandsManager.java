@@ -20,7 +20,6 @@ public class CommandsManager {
                         (new PetCommand(plugin)).getPetCommand(),
                         (new ReloadCommand()).getReloadCommand(),
                         (new GiveItemCommand(plugin)).getGiveItemCommand()
-
                 )
                 .executes((sender, args) -> {
                     Message.COMMAND_HELP.send(sender);

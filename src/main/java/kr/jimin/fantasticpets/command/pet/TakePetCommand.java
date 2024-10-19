@@ -23,13 +23,16 @@ public class TakePetCommand {
     public CommandAPICommand getTakePetCommand() {
         return new CommandAPICommand("take")
                 .withArguments(new PlayerArgument("player"))
-                .withArguments(new StringArgument("pet").replaceSuggestions(ArgumentSuggestions.strings((context) -> PetsUtils.getAllPets().toArray(new String[0]))))
+                .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
+                    Player player = (Player) info.previousArgs().get("player");
+                    return PetsUtils.getPlayerPets(player).toArray(new String[0]);
+                })))
                 .executes((sender, args) -> {
                     Player player = (Player) args.get("player");
                     if (player == null) {
                         return;
                     }
-                    String petId = (String) args.get("pet");
+                    String petId = (String) args.get("petId");
 
                     String petName = PetsUtils.getPetNameFromId(petId);
                     if (petName == null) {
@@ -50,8 +53,9 @@ public class TakePetCommand {
                     if (!Message.COMMAND_TAKE_TARGET.toString().isEmpty()) {
                         Message.COMMAND_TAKE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", sender.getName()));
                     }
+
                     if (Config.SETTING_LOG.toBool()) {
-                        new LogsManager(plugin).commandLog("take", player.getName(), player.getName(), petId + "/Pet");
+                        new LogsManager(plugin).commandLog("take", player.getName(), player.getName(), petId + "/Pet", "1");
                     }
                 });
     }

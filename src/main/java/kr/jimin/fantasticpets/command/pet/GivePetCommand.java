@@ -53,7 +53,7 @@ public class GivePetCommand {
                         Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", sender.getName()));
                     }
                     if (Config.SETTING_LOG.toBool()) {
-                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), petId + "/Pet");
+                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), petId + "/Pet", "1");
                     }
                 }));
     }

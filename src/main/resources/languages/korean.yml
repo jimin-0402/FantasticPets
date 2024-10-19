@@ -22,10 +22,14 @@ pet:
     acquired: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) 획득하였습니다."
     acquired-category: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
       획득하였습니다."
+    acquired-chance: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) 획득하였습니다. <gray><chance>"
+    acquired-category-chance: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
+      획득하였습니다. <gray><chance>"
   without:
     main: "<prefix><#b8bbc2>등록된 펫이 존재하지 않거나, 사용가능한 펫이 존재하지 않습니다."
     pet: "<prefix><#b8bbc2>해당 아이템은 사용이 불가능합니다."
   not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2>은(는) 등록된 펫이 아닙니다."
+  already-owned: "<prefix><#b8bbc2>당신은 이미 <reset><pet-name></reset><#b8bbc2>을(를) 소유하고 있습니다."
 
 command:
   help: "<prefix><#b8bbc2>사용 가능한 명령어 \n<hover:show_text:\"<gray>리로드 명령어\"><click:SUGGEST_COMMAND:/fantasticpets\
@@ -33,13 +37,13 @@ command:
     을 리로드합니다 \n<hover:show_text:\"<gray>인벤토리 명령어\"><click:SUGGEST_COMMAND:/oraxen\
     \ inv><#6f737d>/o <#b8bbc2>인벤토리</click></hover>  <#6f737d>»<#b8bbc2> 인벤토리에 있는\
     \ Oraxen 아이템을 표시합니다"
-  
+
   give:
     player: "<prefix><#43c9fa><player><#b8bbc2>님께 <reset><pet-name></reset><#b8bbc2>을(를)
       지급했습니다."
     target: "<prefix><#d15335><player><#b8bbc2>님이 당신에게 <reset><pet-name></reset><#b8bbc2>을(를)
       지급했습니다."
-  
+
   take:
     player: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) <#43c9fa><player><#b8bbc2>님에게서
       회수했습니다."
@@ -48,5 +52,5 @@ command:
 
 logs:
   date: "yyyy-MM-dd HH:mm:ss"
-  command: "[<date>] [<type>] [user: <player-name>(<player-id>)] [admin: <admin-name>] [pet/item: <pet-id>]"
+  command: "[<date>] [<type>] [user: <player-name>(<player-id>)] [admin: <admin-name>] [pet/item: <pet-id>] [amount: <amount>]"
   user:

@@ -32,7 +32,7 @@ public class GivePetItemCommand {
 
                     FantasticPetsUtils.giveItem(plugin, sender, player, id, amount);
                     if (Config.SETTING_LOG.toBool()) {
-                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), id + "/Item");
+                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), id + "/Item", String.valueOf(amount));
                     }
                 });
     }

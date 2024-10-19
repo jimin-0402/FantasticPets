@@ -1,20 +1,14 @@
 package kr.jimin.fantasticpets.util.pet;
 
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
-import kr.jimin.fantasticpets.config.Message;
-import kr.jimin.fantasticpets.util.MessagesUtils;
+import kr.jimin.fantasticpets.config.Config;
 import kr.jimin.fantasticpets.util.item.ItemUtils;
 import kr.jimin.fantasticpets.util.item.ItemHandler;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PetsFileManager {
@@ -22,6 +16,39 @@ public class PetsFileManager {
 
     public static ItemStack loadPetItems(FantasticPetsPlugin plugin, String petItemId) {
         return items.containsKey(petItemId) ? items.get(petItemId) : loadPIFromFile(plugin, petItemId);
+    }
+
+    public static double getChance(FantasticPetsPlugin plugin, String petItemId) {
+        File file = new File(plugin.getDataFolder(), "Pets/" + petItemId + ".yml");
+
+        if (!file.exists()) {
+            return 100.0;
+        }
+
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        return config.getDouble("chance", 100.0);
+    }
+
+    public static List<String> getWeightedPetList(FantasticPetsPlugin plugin, List<String> playerPets) {
+        List<String> weightedPets = new ArrayList<>();
+        List<String> petIds = getPIList(plugin);
+
+        for (String petId : petIds) {
+            double chance = getChance(plugin, petId);
+            int weight = (int) (chance * 100);
+
+            if (weight > 0) {
+                if (playerPets.contains(petId)) {
+                    if (Config.PET_ALLOW_DUPLICATION.toBool()) {
+                        weightedPets.addAll(Collections.nCopies(weight, petId));
+                    }
+                    continue;
+                }
+                weightedPets.addAll(Collections.nCopies(weight, petId));
+            }
+        }
+
+        return weightedPets;
     }
 
     private static ItemStack loadPIFromFile(FantasticPetsPlugin plugin, String petItemsID) {
@@ -55,6 +82,11 @@ public class PetsFileManager {
         items.clear();
         File itemsFolder = new File(plugin.getDataFolder(), "Pets");
 
+        if (!itemsFolder.exists() || !itemsFolder.isDirectory()) {
+            System.out.println("Pets folder does not exist.");
+            return;
+        }
+
         File[] files = itemsFolder.listFiles((dir, name) -> name.endsWith(".yml"));
 
         if (files != null && files.length > 0) {
@@ -75,7 +107,7 @@ public class PetsFileManager {
         File[] files = itemsFolder.listFiles();
 
         return (files != null) ?
-                java.util.Arrays.stream(files)
+                Arrays.stream(files)
                         .filter(file -> file.getName().endsWith(".yml"))
                         .filter(file -> {
                             YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -121,8 +153,7 @@ public class PetsFileManager {
         if (items.isEmpty()) {
             reloadPetItems(plugin);
         }
-        List<String> petIds = items.keySet().stream().toList();
+        List<String> petIds = new ArrayList<>(items.keySet());
         return petIds.isEmpty() ? null : petIds.get(new Random().nextInt(petIds.size()));
     }
-
 }

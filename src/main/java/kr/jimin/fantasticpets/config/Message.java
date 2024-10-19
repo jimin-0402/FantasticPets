@@ -25,10 +25,11 @@ public enum Message {
     PET_HAS_ALL("pet.ownership.has-all"),
     PET_ACQUIRED("pet.acquired.acquired"),
     PET_ACQUIRED_CATEGORY("pet.acquired.acquired-category"),
+    PET_ACQUIRED_CHANCE("pet.acquired.acquired-chance"),
+    PET_ACQUIRED_CATEGORY_CHANCE("pet.acquired.acquired-category-chance"),
     PET_WITHOUT_MAIN("pet.without.main"),
     PET_WITHOUT_PET("pet.without.pet"),
     PET_NOT_FOUND("pet.not-found"),
-
 
     // Command Messages
     COMMAND_HELP("command.help"),

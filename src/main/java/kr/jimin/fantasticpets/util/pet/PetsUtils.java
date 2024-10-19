@@ -7,16 +7,11 @@ import fr.nocsy.mcpets.data.config.PetConfig;
 import kr.jimin.fantasticpets.FantasticPetsPlugin;
 import kr.jimin.fantasticpets.config.Config;
 import kr.jimin.fantasticpets.config.Message;
-import kr.jimin.fantasticpets.util.LuckPermsUtils;
 import kr.jimin.fantasticpets.util.MessagesUtils;
 import kr.jimin.fantasticpets.util.SoundsUtils;
 import net.kyori.adventure.text.Component;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,28 +104,6 @@ public class PetsUtils {
         return category != null ? category.getDisplayName() : null;
     }
 
-    public static boolean isHasPlayerPet(Player player, String id, boolean message) {
-        List<String> playerPets = getPlayerPets(player);
-        String petName = getPetNameFromId(id);
-        if (playerPets.contains(id)) {
-            if (message) {
-                Message.PET_HAS.send(player, MessagesUtils.tagResolver("pet-name", petName));
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isAllPets(Player player) {
-        List<String> playerPets = getPlayerPets(player);
-        List<String> allPets = getAllPets();
-        if (playerPets.containsAll(allPets)) {
-            Message.PET_HAS_ALL.send(player);
-            return true;
-        }
-        return false;
-    }
-
     public static Component getCategory(String petId) {
         String petCategoryId = getCategoryOfPet(petId);
         if (petCategoryId == null || petCategoryId.isEmpty()) return null;
@@ -139,22 +112,5 @@ public class PetsUtils {
         if (petCategoryName == null) return null;
 
         return MessagesUtils.processMessage(petCategoryName);
-    }
-
-    static String getRandomPetId(FantasticPetsPlugin plugin, List<String> playerPets, List<String> enabledPets, boolean duplication) {
-        if (duplication) {
-            for (int attempt = 0; attempt < enabledPets.size(); attempt++) {
-                String petId = PetsFileManager.getRandomItemsID(plugin);
-                if (petId != null && !playerPets.contains(petId) && enabledPets.contains(petId)) {
-                    return petId;
-                }
-            }
-        } else {
-            String petId = PetsFileManager.getRandomItemsID(plugin);
-            if (petId != null && enabledPets.contains(petId)) {
-                return petId;
-            }
-        }
-        return null;
     }
 }

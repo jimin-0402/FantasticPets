@@ -19,8 +19,9 @@ public enum Config {
     SETTING_LOG("Setting.log"),
 
     // pet
-    PET_DUPLICATION("Pet.duplication"),
+    PET_ALLOW_DUPLICATION("Pet.allow-duplicates"),
     PET_USE_CATEGORY("Pet.use-category"),
+    PET_USE_CHANCE("Pet.use-chance"),
     PET_ITEM_MATERIAL("Pet.item.material"),
     PET_ITEM_NAME("Pet.item.display-name"),
     PET_ITEM_LORE("Pet.item.lore"),

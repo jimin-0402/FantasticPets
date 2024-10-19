@@ -97,7 +97,7 @@ public class ConfigsManager {
 
                     newConfig.save(file);
                 } else {
-                    Logs.logError("example.yml 파일이 존재하지 않습니다.");
+                    Logs.logError("The example.yml file does not exist.");
                 }
             } catch (IOException e) {
                 Logs.logError("Error copying example.yml content: " + e.getMessage());

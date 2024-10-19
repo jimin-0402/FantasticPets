@@ -43,7 +43,6 @@ public class GiveItemCommand {
                             Config.PET_ITEM_MODEL_DATA.toInt()
                     );
 
-
                     if (customItem == null) return;
 
                     customItem.giveItem(player, amount);
@@ -51,7 +50,7 @@ public class GiveItemCommand {
                     Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("player", sender.name()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));
 
                     if (Config.SETTING_LOG.toBool()) {
-                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), "MainItem");
+                        new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), "MainItem", String.valueOf(amount));
                     }
                 });
     }

@@ -26,18 +26,13 @@ public enum ClickType {
     }
 
     private static boolean isClickTypeValid(Action action, boolean isSneaking, ClickType clickType) {
-        switch (clickType) {
-            case RIGHT:
-                return action == Action.RIGHT_CLICK_AIR && !isSneaking;
-            case LEFT:
-                return action == Action.LEFT_CLICK_AIR && !isSneaking;
-            case RIGHT_SHIFT:
-                return action == Action.RIGHT_CLICK_AIR && isSneaking;
-            case LEFT_SHIFT:
-                return action == Action.LEFT_CLICK_AIR && isSneaking;
-            default:
-                return false;
-        }
+        return switch (clickType) {
+            case RIGHT -> action == Action.RIGHT_CLICK_AIR && !isSneaking;
+            case LEFT -> action == Action.LEFT_CLICK_AIR && !isSneaking;
+            case RIGHT_SHIFT -> action == Action.RIGHT_CLICK_AIR && isSneaking;
+            case LEFT_SHIFT -> action == Action.LEFT_CLICK_AIR && isSneaking;
+            default -> false;
+        };
     }
 
     public static boolean isValidClickType(PlayerInteractEvent event, String clickTypeConfig, Player player) {

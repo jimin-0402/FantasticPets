@@ -6,8 +6,9 @@ Setting:
   log: true
 
 Pet:
-  duplication: true
+  allow-duplicates: true
   use-category: true
+  use-chance: true
 
   item:
     material: ENCHANTED_BOOK

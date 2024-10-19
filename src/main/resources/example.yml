@@ -1,4 +1,5 @@
 enable: false
+chance: 100
 item:
   material: STONE
   display_name: ""
