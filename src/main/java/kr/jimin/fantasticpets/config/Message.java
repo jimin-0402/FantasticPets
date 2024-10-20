@@ -14,8 +14,6 @@ public enum Message {
     PREFIX("general.prefix"),
     RELOAD("general.messages.reload"),
     NOT_ITEM("general.messages.not-item"),
-    GIVE_ITEM("general.messages.give-item"),
-    GIVEN_ITEM("general.messages.given-item"),
 
     // Pet Messages
     PET_CATEGORY_PREFIX("pet.category.prefix"),
@@ -29,6 +27,8 @@ public enum Message {
     PET_ACQUIRED_CATEGORY_CHANCE("pet.acquired.acquired-category-chance"),
     PET_WITHOUT_MAIN("pet.without.main"),
     PET_WITHOUT_PET("pet.without.pet"),
+    PET_LIST_TYPE_FORMAT("pet.list.type-format"),
+    PET_LIST_PET_FORMAT("pet.list.pet-format"),
     PET_NOT_FOUND("pet.not-found"),
 
     // Command Messages

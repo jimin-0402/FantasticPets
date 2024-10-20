@@ -3,48 +3,48 @@ general:
   messages:
     reload: "<prefix><#b8bbc2>Successfully reloaded."
     not-item: "<prefix><#b8bbc2>Item not found. <pet-item>"
-    give-item: "<prefix><player><#b8bbc2> has been given <pet-item><#b8bbc2>. <gray>(<category-name><category-prefix>[<amount>])"
-    given-item: "<prefix>You have received <pet-item><#b8bbc2>. <gray>(<category-name><category-prefix>[<amount>])"
 
 pet:
   category:
-    prefix: "<reset><#43c9fa>Grade</reset>"
+    prefix: "<reset><#43c9fa>Category</reset>"
   ownership:
     has: "<prefix><#b8bbc2>You own <reset><pet-name></reset><#b8bbc2>."
     has-target: "<prefix><#43c9fa><player><#b8bbc2> already owns <reset><pet-name></reset><#b8bbc2>."
     has-not: "<prefix><#43c9fa><player><#b8bbc2> does not own <reset><pet-name></reset><#b8bbc2>."
     has-all: "<prefix><#b8bbc2>You own all pets."
   acquired:
-    acquired: "<prefix>You have acquired <reset><pet-name></reset><#b8bbc2>."
-    acquired-category: "<prefix><category-name><category-prefix> You have acquired <reset><pet-name></reset><#b8bbc2>."
-    acquired-chance: "<prefix>You have acquired <reset><pet-name></reset><#b8bbc2>. <gray><chance>"
-    acquired-category-chance: "<prefix><category-name><category-prefix> You have acquired <reset><pet-name></reset><#b8bbc2>. <gray><chance>"
+    acquired: "<prefix><reset><pet-name></reset><#b8bbc2> has been acquired."
+    acquired-category: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2> has been acquired."
+    acquired-chance: "<prefix><reset><pet-name></reset><#b8bbc2> has been acquired. <gray><chance>%"
+    acquired-category-chance: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2> has been acquired. <gray><chance>%"
   without:
-    main: "<prefix><#b8bbc2>No registered pets or available pets exist."
-    pet: "<prefix><#b8bbc2>This item cannot be used."
+    main: "<prefix><#b8bbc2>No pets registered or available."
+    pet: "<prefix><#b8bbc2>This item is unusable."
+  list:
+    type-format: "<prefix> <#43fa8c><plugin-type> list"
+    pet-format: "<white><number-index> <gray>- <white><pet-id><gray>(<reset><pet-name></reset><gray>)"
   not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2> is not a registered pet."
-  already-owned: "<prefix><#b8bbc2>You already own <reset><pet-name></reset><#b8bbc2>."
 
 command:
-  help: "<prefix><#b8bbc2>Available commands 
+  help: "<prefix><#b8bbc2>Available commands: 
     \n<hover:show_text:\"<gray>Reload command\"><click:SUGGEST_COMMAND:/fantasticpets reload>
-      <#6f737d>/fp <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> Reloads the plugin.
-    \n<hover:show_text:\"<gray>Main item give command\"><click:SUGGEST_COMMAND:/fantasticpets item >
-      <#6f737d>/fp <#b8bbc2>item <#43c9fa>target <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> Gives the main item.
-    \n<hover:show_text:\"<gray>Pet give command\"><click:SUGGEST_COMMAND:/fantasticpets pet give >
-      <#6f737d>/fp <#b8bbc2>pet give <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> Gives a pet.
-    \n<hover:show_text:\"<gray>Pet take command\"><click:SUGGEST_COMMAND:/fantasticpets pet take >
-      <#6f737d>/fp <#b8bbc2>pet take <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> Takes back a pet.
-    \n<hover:show_text:\"<gray>Pet item give command\"><click:SUGGEST_COMMAND:/fantasticpets pet item >
-      <#6f737d>/fp <#b8bbc2>pet item <#43c9fa>target <#fa4362>item <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> Gives an item."
+      <#6f737d>/fp <#b8bbc2>reload</click></hover> <#6f737d>»<#b8bbc2> Reload the plugin.
+    \n<hover:show_text:\"<gray>Give main item command\"><click:SUGGEST_COMMAND:/fantasticpets item >
+      <#6f737d>/fp <#b8bbc2>item <#43c9fa>target <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> Give the main item.
+    \n<hover:show_text:\"<gray>Give pet command\"><click:SUGGEST_COMMAND:/fantasticpets pet give >
+      <#6f737d>/fp <#b8bbc2>pet give <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> Give a pet.
+    \n<hover:show_text:\"<gray>Take pet command\"><click:SUGGEST_COMMAND:/fantasticpets pet take >
+      <#6f737d>/fp <#b8bbc2>pet take <#43c9fa>target <#fa8943>pet</click></hover> <#6f737d>»<#b8bbc2> Take a pet.
+    \n<hover:show_text:\"<gray>Give pet item command\"><click:SUGGEST_COMMAND:/fantasticpets pet item >
+      <#6f737d>/fp <#b8bbc2>pet item <#43c9fa>target <#fa4362>item <#43fa8c>amount</click></hover> <#6f737d>»<#b8bbc2> Give pet item."
 
   give:
-    player: "<prefix><#43c9fa><player><#b8bbc2> has been given <reset><pet-name></reset><#b8bbc2>."
-    target: "<prefix><#d15335><player><#b8bbc2> has given you <reset><pet-name></reset><#b8bbc2>."
+    player: "<prefix><#43c9fa><player><#b8bbc2> received <reset><pet-name></reset><#b8bbc2>."
+    target: "<prefix><#d15335><player><#b8bbc2> gave you <reset><pet-name></reset><#b8bbc2>."
 
   take:
-    player: "<prefix><reset><pet-name></reset><#b8bbc2> has been taken from <#43c9fa><player><#b8bbc2>."
-    target: "<prefix><#d15335><player><#b8bbc2> has taken your <reset><pet-name></reset><#b8bbc2>."
+    player: "<prefix><reset><pet-name></reset><#b8bbc2> was taken from <#43c9fa><player><#b8bbc2>."
+    target: "<prefix><#d15335><player><#b8bbc2> took your <reset><pet-name></reset><#b8bbc2>."
 
 logs:
   date: "yyyy-MM-dd HH:mm:ss"

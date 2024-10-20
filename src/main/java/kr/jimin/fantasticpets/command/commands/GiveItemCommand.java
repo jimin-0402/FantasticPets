@@ -43,7 +43,10 @@ public class GiveItemCommand {
                             Config.PET_ITEM_MODEL_DATA.toInt()
                     );
 
-                    if (customItem == null) return;
+                    if (customItem == null) {
+                        Message.NOT_ITEM.send(sender, MessagesUtils.tagResolver("pet-item", Config.PET_ITEM_NAME.toComponent()));
+                        return;
+                    }
 
                     customItem.giveItem(player, amount);
                     Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("player", player.name()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));

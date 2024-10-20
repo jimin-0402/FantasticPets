@@ -13,7 +13,7 @@ public enum Config {
 
     DEBUG("debug"),
 
-    // plugin
+    // setting
     SETTING_LANGUAGE("Setting.language"),
     SETTING_CLICK_TYPE("Setting.cluck-type"),
     SETTING_LOG("Setting.log"),

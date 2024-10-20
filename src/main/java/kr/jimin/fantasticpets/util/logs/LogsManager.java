@@ -18,7 +18,7 @@ public class LogsManager {
     private final File logsDirectory;
 
     private static final String LOGS_DIRECTORY_NAME = "Logs";
-    private static final String SERVER_LOG_DIR_FORMAT = "server/%d-%02d-%02d";
+    private static final String SERVER_LOG_DIR_FORMAT = "%d-%02d-%02d";
     private static final String COMMAND_LOG_FILENAME = "command.txt";
     private static final String USER_LOG_FILENAME = "user.txt";
 

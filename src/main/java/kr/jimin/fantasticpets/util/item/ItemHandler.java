@@ -18,7 +18,7 @@ public class ItemHandler {
     static {
         factories.put("ORAXEN", new OraxenFactory());
         factories.put("ITEMSADDER", new IAFactory());
-        factories.put("HEADDATABASE", new HDBFactory());
+        factories.put("HDB", new HDBFactory());
     }
 
     public static ItemUtils create(

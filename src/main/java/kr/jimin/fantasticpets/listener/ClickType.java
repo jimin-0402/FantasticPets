@@ -11,18 +11,13 @@ public enum ClickType {
     LEFT_SHIFT;
 
     public static ClickType fromString(String type) {
-        switch (type) {
-            case "RIGHT":
-                return RIGHT;
-            case "LEFT":
-                return LEFT;
-            case "RIGHT:SHIFT":
-                return RIGHT_SHIFT;
-            case "LEFT:SHIFT":
-                return LEFT_SHIFT;
-            default:
-                return null;
-        }
+        return switch (type) {
+            case "RIGHT" -> RIGHT;
+            case "LEFT" -> LEFT;
+            case "RIGHT:SHIFT" -> RIGHT_SHIFT;
+            case "LEFT:SHIFT" -> LEFT_SHIFT;
+            default -> null;
+        };
     }
 
     private static boolean isClickTypeValid(Action action, boolean isSneaking, ClickType clickType) {

@@ -85,22 +85,13 @@ public class FantasticPetsUtils {
     public static void getCategoryMessage(FantasticPetsPlugin plugin, Player player, String petId, boolean sendChance) {
         String petName = PetsUtils.getPetNameFromId(petId);
         Component categoryComponent = PetsUtils.getCategoryNameByPetId(petId);
-        boolean useChance = Config.PET_USE_CHANCE.toBool();
 
+        boolean useChance = Config.PET_USE_CHANCE.toBool();
         double chance = useChance ? PetsFileManager.getChance(plugin, petId) : 0.0;
 
-        if (Config.PET_USE_CATEGORY.toBool()) {
-            if (categoryComponent == null) {
-                if (sendChance) {
-                    Message.PET_ACQUIRED_CHANCE.send(player,
-                            MessagesUtils.tagResolver("pet-name", petName),
-                            MessagesUtils.tagResolver("chance", String.valueOf(chance)));
-                } else {
-                    Message.PET_ACQUIRED.send(player, MessagesUtils.tagResolver("pet-name", petName));
-                }
-                return;
-            }
-            if (sendChance) {
+        // 메시지 전송을 위한 기본 설정
+        if (Config.PET_USE_CATEGORY.toBool() && categoryComponent != null) {
+            if (sendChance && useChance) {
                 Message.PET_ACQUIRED_CATEGORY_CHANCE.send(player,
                         MessagesUtils.tagResolver("pet-name", petName),
                         MessagesUtils.tagResolver("category-name", categoryComponent),
@@ -113,7 +104,7 @@ public class FantasticPetsUtils {
                         MessagesUtils.tagResolver("category-prefix", MessagesUtils.processMessage(Message.PET_CATEGORY_PREFIX.toString())));
             }
         } else {
-            if (sendChance) {
+            if (sendChance && useChance) {
                 Message.PET_ACQUIRED_CHANCE.send(player,
                         MessagesUtils.tagResolver("pet-name", petName),
                         MessagesUtils.tagResolver("chance", String.valueOf(chance)));
@@ -122,6 +113,7 @@ public class FantasticPetsUtils {
             }
         }
     }
+
 
     public static void addPetsPermPlayer(Player player, String petId) {
         User user = LuckPermsUtils.getLuckPermsUser(player);

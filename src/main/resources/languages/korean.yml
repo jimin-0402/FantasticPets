@@ -3,8 +3,6 @@ general:
   messages:
     reload: "<prefix><#b8bbc2>성공적으로 새로고침되었습니다."
     not-item: "<prefix><#b8bbc2>아이템을 찾을 수 없습니다. <pet-item>"
-    give-item: "<prefix><player><#b8bbc2>님께 <pet-item><#b8bbc2>을(를) 지급했습니다. <gray>(<category-name><category-prefix>[<amount>])"
-    given-item: "<prefix><pet-item><#b8bbc2>을(를) 지급받았습니다. <gray>(<category-name><category-prefix>[<amount>])"
 
 pet:
   category:
@@ -20,14 +18,16 @@ pet:
     acquired: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) 획득하였습니다."
     acquired-category: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
       획득하였습니다."
-    acquired-chance: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) 획득하였습니다. <gray><chance>"
+    acquired-chance: "<prefix><reset><pet-name></reset><#b8bbc2>을(를) 획득하였습니다. <gray><chance>%"
     acquired-category-chance: "<prefix><category-name><category-prefix> <reset><pet-name></reset><#b8bbc2>을(를)
-      획득하였습니다. <gray><chance>"
+      획득하였습니다. <gray><chance>%"
   without:
     main: "<prefix><#b8bbc2>등록된 펫이 존재하지 않거나, 사용가능한 펫이 존재하지 않습니다."
     pet: "<prefix><#b8bbc2>해당 아이템은 사용이 불가능합니다."
+  list:
+    type-format: "<prefix> <#43fa8c><plugin-type> 리스트"
+    pet-format: "<white><number-index> <gray>- <white><pet-id><gray>(<reset><pet-name></reset><gray>)"
   not-found: "<prefix><reset><#55ffa4><pet-name></reset><#b8bbc2>은(는) 등록된 펫이 아닙니다."
-  already-owned: "<prefix><#b8bbc2>당신은 이미 <reset><pet-name></reset><#b8bbc2>을(를) 소유하고 있습니다."
 
 command:
   help: "<prefix><#b8bbc2>사용 가능한 명령어 

@@ -23,10 +23,7 @@ public class GivePetCommand {
     public CommandAPICommand getGivePetCommand() {
         return new CommandAPICommand("give")
                 .withArguments(new PlayerArgument("player"))
-                .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
-                    Player player = (Player) info.previousArgs().get("player");
-                    return PetsUtils.getPlayerPets(player).toArray(new String[0]);
-                })))
+                .withArguments(new StringArgument("pet").replaceSuggestions(ArgumentSuggestions.strings(context -> PetsUtils.getAllPets().toArray(new String[0]))))
                 .executes((sender, args) -> {
                     Player player = (Player) args.get("player");
                     if (player == null) {
@@ -58,3 +55,4 @@ public class GivePetCommand {
                 });
     }
 }
+
