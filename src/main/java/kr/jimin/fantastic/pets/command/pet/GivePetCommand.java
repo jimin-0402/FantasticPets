@@ -22,6 +22,7 @@ public class GivePetCommand {
 
     public CommandAPICommand getGivePetCommand() {
         return new CommandAPICommand("give")
+                .withPermission("fantasticpets.command.pet.give")
                 .withArguments(new PlayerArgument("player"))
                 .withArguments(new StringArgument("pet").replaceSuggestions(ArgumentSuggestions.strings(context -> PetsUtils.getAllPets().toArray(new String[0]))))
                 .executes((sender, args) -> {

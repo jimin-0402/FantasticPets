@@ -21,6 +21,7 @@ public class GivePetItemCommand {
 
     public CommandAPICommand getGivePetItemCommand() {
         return new CommandAPICommand("item")
+                .withPermission("fantasticpets.command.pet.item")
                 .withArguments(new PlayerArgument("player"))
                 .withArguments(new StringArgument("item").replaceSuggestions(ArgumentSuggestions.strings(sender -> PetsFileManager.getPIList(plugin).toArray(new String[0]))))
                 .withOptionalArguments(new IntegerArgument("amount").replaceSuggestions(ArgumentSuggestions.strings("1")))

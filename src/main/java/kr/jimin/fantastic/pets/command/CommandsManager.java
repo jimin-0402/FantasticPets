@@ -15,6 +15,7 @@ public class CommandsManager {
 
     public void loadCommands() {
         new CommandAPICommand("fantasticpets")
+                .withPermission("fantasticpets.command")
                 .withAliases("fp", "fpets")
                 .withSubcommands(
                         (new PetCommand(plugin)).getPetCommand(),

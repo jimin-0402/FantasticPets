@@ -11,7 +11,6 @@ import kr.jimin.fantastic.pets.util.MessagesUtils;
 import kr.jimin.fantastic.pets.util.item.ItemHandler;
 import kr.jimin.fantastic.pets.util.item.ItemUtils;
 import kr.jimin.fantastic.pets.util.logs.LogsManager;
-import kr.jimin.fantastic.pets.util.pet.PetsUtils;
 import org.bukkit.entity.Player;
 
 public class GiveItemCommand {
@@ -23,6 +22,7 @@ public class GiveItemCommand {
 
     public CommandAPICommand getGiveItemCommand() {
         return new CommandAPICommand("item")
+                .withPermission("fantasticpets.command.item")
                 .withArguments(
                         new PlayerArgument("player"),
                         new IntegerArgument("amount").setOptional(true).replaceSuggestions(ArgumentSuggestions.strings("1"))

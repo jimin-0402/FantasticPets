@@ -2,15 +2,11 @@ package kr.jimin.fantastic.pets.command.pet;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import kr.jimin.fantastic.pets.FantasticPetsPlugin;
-import kr.jimin.fantastic.pets.config.Config;
 import kr.jimin.fantastic.pets.config.Message;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
-import kr.jimin.fantastic.pets.util.logs.LogsManager;
-import kr.jimin.fantastic.pets.util.pet.FantasticPetsUtils;
 import kr.jimin.fantastic.pets.util.pet.PetsFileManager;
 import kr.jimin.fantastic.pets.util.pet.PetsUtils;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +20,7 @@ public class PetsListCommand {
 
     public CommandAPICommand getPetsListCommand() {
         return new CommandAPICommand("list")
+                .withPermission("fantasticpets.command.pet.list")
                 .withSubcommands(getMCPetsListCommand(), getFantasticPetsListCommand())
                 .executes((sender, args) -> {
                     Message.COMMAND_HELP.send(sender);
@@ -32,6 +29,7 @@ public class PetsListCommand {
 
     private CommandAPICommand getMCPetsListCommand() {
         return new CommandAPICommand("mcpets")
+                .withPermission("fantasticpets.command.pet.list.mcpets")
                 .executes((sender, args) -> {
                     getPetList(sender, "mcpets");
                 });
@@ -39,6 +37,7 @@ public class PetsListCommand {
 
     private CommandAPICommand getFantasticPetsListCommand() {
         return new CommandAPICommand("fantasticpets")
+                .withPermission("fantasticpets.command.pet.list.fantasticpets")
                 .executes((sender, args) -> {
                     getPetList(sender, "fantasticpets");
                 });

@@ -17,6 +17,7 @@ public class PetCommand {
 
     public CommandAPICommand getPetCommand() {
         return new CommandAPICommand("pet")
+                .withPermission("fantasticpets.command.pet")
                 .withSubcommands(
                         (new GivePetItemCommand(plugin)).getGivePetItemCommand(),
                         (new GivePetCommand(plugin)).getGivePetCommand(),

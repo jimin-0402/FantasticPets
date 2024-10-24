@@ -22,6 +22,7 @@ public class TakePetCommand {
 
     public CommandAPICommand getTakePetCommand() {
         return new CommandAPICommand("take")
+                .withPermission("fantasticpets.command.pet.take")
                 .withArguments(new PlayerArgument("player"))
                 .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
                     Player player = (Player) info.previousArgs().get("player");
