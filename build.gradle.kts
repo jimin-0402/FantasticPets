@@ -3,7 +3,7 @@ plugins {
     id("io.github.goooler.shadow") version "8.1.8"
 }
 
-group = "kr.jimin.fantasticpets"
+group = "kr.jimin.fantastic.pets"
 version = "1.0-SNAPSHOT"
 
 repositories {

@@ -1,5 +1,5 @@
 name: FantasticPets
-main: kr.jimin.fantasticpets.FantasticPetsPlugin
+main: kr.jimin.fantastic.pets.FantasticPetsPlugin
 version: '${version}'
 api-version: 1.20
 author: Jimin
