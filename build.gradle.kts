@@ -4,11 +4,10 @@ plugins {
 }
 
 group = "kr.jimin.fantastic.pets"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.oraxen.com/releases")
     maven("https://jitpack.io")
     mavenCentral()
@@ -43,8 +42,6 @@ tasks {
     }
 
     build.get().dependsOn(shadowJar)
-
-
 
     test { useJUnitPlatform() }
 }

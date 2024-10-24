@@ -14,11 +14,11 @@ public class MessagesUtils {
 
     public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-    public static final TagResolver FurryFriendsTagResolver = TagResolver.resolver(TagResolver.standard(),
+    public static final TagResolver PluginTagResolver = TagResolver.resolver(TagResolver.standard(),
             TagResolver.resolver("prefix", Tag.selfClosingInserting(MINI_MESSAGE.deserialize(Message.PREFIX.toString())))
     );
 
-    public static final MiniMessage MINI_MESSAGE_WITH_TAGS = MiniMessage.builder().tags(FurryFriendsTagResolver).build();
+    public static final MiniMessage MINI_MESSAGE_WITH_TAGS = MiniMessage.builder().tags(PluginTagResolver).build();
 
     public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
             .hexColors()

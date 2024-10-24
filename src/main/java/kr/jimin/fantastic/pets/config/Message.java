@@ -48,10 +48,6 @@ public enum Message {
         this.path = path;
     }
 
-    public String getPath() {
-        return path;
-    }
-
     @Override
     public String toString() {
         return FantasticPetsPlugin.get().getConfigsManager().getLanguage().getString(path);

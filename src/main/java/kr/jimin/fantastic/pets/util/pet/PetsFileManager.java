@@ -4,6 +4,7 @@ import kr.jimin.fantastic.pets.FantasticPetsPlugin;
 import kr.jimin.fantastic.pets.config.Config;
 import kr.jimin.fantastic.pets.util.item.ItemUtils;
 import kr.jimin.fantastic.pets.util.item.ItemHandler;
+import kr.jimin.fantastic.pets.util.logs.Logs;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
@@ -68,7 +69,7 @@ public class PetsFileManager {
         int amount = config.getInt("item.amount", 1);
         String displayName = config.getString("item.display_name", petItemsID);
         List<String> lore = config.getStringList("item.lore");
-        int customModelData = config.getInt("item.custom_model_data", 0);
+        int customModelData = config.getInt("item.custom_model_data", -1);
 
         ItemUtils itemUtils = ItemHandler.create(material, displayName, lore, amount, customModelData);
         if (itemUtils == null) {
@@ -98,7 +99,7 @@ public class PetsFileManager {
                 }
             }
         } else {
-            System.out.println("No pet files found in the Pets folder.");
+            Logs.logError("No pet files found in the Pets folder.");
         }
     }
 
@@ -140,7 +141,7 @@ public class PetsFileManager {
         String material = config.getString("item.material", "STONE");
         String displayName = config.getString("item.display_name");
         List<String> lore = config.getStringList("item.lore");
-        int customModelData = config.getInt("item.custom_model_data", 0);
+        int customModelData = config.getInt("item.custom_model_data", -1);
 
         ItemUtils itemUtils = ItemHandler.create(material, displayName, lore, 1, customModelData);
         assert itemUtils != null;
