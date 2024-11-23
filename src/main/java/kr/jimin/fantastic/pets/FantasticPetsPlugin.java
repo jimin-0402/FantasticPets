@@ -8,6 +8,7 @@ import kr.jimin.fantastic.pets.listener.ItemCheckListener;
 import kr.jimin.fantastic.pets.util.logs.LogsManager;
 import kr.jimin.fantastic.pets.util.pet.PetsFileManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FantasticPetsPlugin extends JavaPlugin {
@@ -42,6 +43,8 @@ public class FantasticPetsPlugin extends JavaPlugin {
         new CommandsManager(this).loadCommands();
 
         getServer().getPluginManager().registerEvents(new ItemCheckListener(this), this);
+
+        new Metrics(this, 23974);
     }
 
     @Override

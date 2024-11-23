@@ -14,7 +14,6 @@ import java.util.UUID;
 
 public class LogsManager {
 
-    private final FantasticPetsPlugin plugin;
     private final File logsDirectory;
 
     private static final String LOGS_DIRECTORY_NAME = "Logs";
@@ -23,7 +22,6 @@ public class LogsManager {
     private static final String USER_LOG_FILENAME = "user.txt";
 
     public LogsManager(FantasticPetsPlugin plugin) {
-        this.plugin = plugin;
 
         this.logsDirectory = new File(plugin.getDataFolder(), LOGS_DIRECTORY_NAME);
         createLogsDirectory();

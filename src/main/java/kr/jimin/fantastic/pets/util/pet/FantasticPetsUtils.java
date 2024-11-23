@@ -89,7 +89,6 @@ public class FantasticPetsUtils {
         boolean useChance = Config.PET_USE_CHANCE.toBool();
         double chance = useChance ? PetsFileManager.getChance(plugin, petId) : 0.0;
 
-        // 메시지 전송을 위한 기본 설정
         if (Config.PET_USE_CATEGORY.toBool() && categoryComponent != null) {
             if (sendChance && useChance) {
                 Message.PET_ACQUIRED_CATEGORY_CHANCE.send(player,
