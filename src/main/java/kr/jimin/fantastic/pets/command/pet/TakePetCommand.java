@@ -10,10 +10,10 @@ import kr.jimin.fantastic.pets.config.Message;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
 import kr.jimin.fantastic.pets.util.logs.LogsManager;
 import kr.jimin.fantastic.pets.util.pet.FantasticPetsUtils;
-import kr.jimin.fantastic.pets.util.pet.PetsUtils;
+import kr.jimin.fantastic.pets.api.FantasticPetsAPI;
 import org.bukkit.entity.Player;
 
-public class TakePetCommand {
+public class TakePetCommand extends FantasticPetsAPI {
     private final FantasticPetsPlugin plugin;
 
     public TakePetCommand(FantasticPetsPlugin plugin) {
@@ -26,7 +26,7 @@ public class TakePetCommand {
                 .withArguments(new PlayerArgument("player"))
                 .withArguments(new StringArgument("petId").replaceSuggestions(ArgumentSuggestions.strings(info -> {
                     Player player = (Player) info.previousArgs().get("player");
-                    return PetsUtils.getPlayerPets(player).toArray(new String[0]);
+                    return getPlayerPets(player).toArray(new String[0]);
                 })))
                 .executes((sender, args) -> {
                     Player player = (Player) args.get("player");
@@ -35,13 +35,13 @@ public class TakePetCommand {
                     }
                     String petId = (String) args.get("petId");
 
-                    String petName = PetsUtils.getPetNameFromId(petId);
+                    String petName = getPetNameFromId(petId);
                     if (petName == null) {
                         Message.PET_NOT_FOUND.send(sender, MessagesUtils.tagResolver("pet-name", petId));
                         return;
                     }
 
-                    String petPerm = PetsUtils.getPetPermFromId(petId);
+                    String petPerm = getPetPermFromId(petId);
                     if (petPerm != null && !player.hasPermission(petPerm)) {
                         Message.PET_HAS_NOT.send(sender, MessagesUtils.tagResolver("pet-name", petName), MessagesUtils.tagResolver("player", player.getName()));
                         return;

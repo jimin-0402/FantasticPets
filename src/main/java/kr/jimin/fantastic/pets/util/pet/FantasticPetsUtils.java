@@ -1,6 +1,7 @@
 package kr.jimin.fantastic.pets.util.pet;
 
 import kr.jimin.fantastic.pets.FantasticPetsPlugin;
+import kr.jimin.fantastic.pets.api.FantasticPetsAPI;
 import kr.jimin.fantastic.pets.config.Config;
 import kr.jimin.fantastic.pets.config.Message;
 import kr.jimin.fantastic.pets.util.LuckPermsUtils;
@@ -20,8 +21,10 @@ import java.util.Random;
 
 public class FantasticPetsUtils {
 
+    private static final FantasticPetsAPI petsAPI = new FantasticPetsAPI();
+
     public static void randomGetPet(FantasticPetsPlugin plugin, Player player, ItemStack item) {
-        List<String> playerPets = PetsUtils.getPlayerPets(player);
+        List<String> playerPets = petsAPI.getPlayerPets(player);
 
         if (isAllPets(player)) {
             SoundsUtils.playSound(player, Config.SOUND_FAIL.toStringList());
@@ -29,7 +32,6 @@ public class FantasticPetsUtils {
         }
 
         boolean useWeight = Config.PET_USE_CHANCE.toBool();
-
         String petId;
 
         if (!useWeight) {
@@ -83,8 +85,8 @@ public class FantasticPetsUtils {
     }
 
     public static void getCategoryMessage(FantasticPetsPlugin plugin, Player player, String petId, boolean sendChance) {
-        String petName = PetsUtils.getPetNameFromId(petId);
-        Component categoryComponent = PetsUtils.getCategoryNameByPetId(petId);
+        String petName = petsAPI.getPetNameFromId(petId);
+        Component categoryComponent = petsAPI.getCategoryNameByPetId(petId);
 
         boolean useChance = Config.PET_USE_CHANCE.toBool();
         double chance = useChance ? PetsFileManager.getChance(plugin, petId) : 0.0;
@@ -113,10 +115,9 @@ public class FantasticPetsUtils {
         }
     }
 
-
     public static void addPetsPermPlayer(Player player, String petId) {
         User user = LuckPermsUtils.getLuckPermsUser(player);
-        String petPerm = PetsUtils.getPetPermFromId(petId);
+        String petPerm = petsAPI.getPetPermFromId(petId);
         if (petPerm != null) {
             Node node = Node.builder(petPerm).build();
             user.data().add(node);
@@ -126,7 +127,7 @@ public class FantasticPetsUtils {
 
     public static void removePetsPermPlayer(Player player, String petId) {
         User user = LuckPermsUtils.getLuckPermsUser(player);
-        String petPerm = PetsUtils.getPetPermFromId(petId);
+        String petPerm = petsAPI.getPetPermFromId(petId);
         if (petPerm != null) {
             Node node = Node.builder(petPerm).build();
             user.data().remove(node);
@@ -144,13 +145,13 @@ public class FantasticPetsUtils {
 
         petItem.setAmount(amount);
         player.getInventory().addItem(petItem);
-        Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", PetsUtils.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", player.displayName()));
-        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", PetsUtils.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", sender.name()));
+        Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", petsAPI.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", player.displayName()));
+        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petsAPI.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", sender.name()));
     }
 
     public static boolean isHasPlayerPet(Player player, String id, boolean message) {
-        List<String> playerPets = PetsUtils.getPlayerPets(player);
-        String petName = PetsUtils.getPetNameFromId(id);
+        List<String> playerPets = petsAPI.getPlayerPets(player);
+        String petName = petsAPI.getPetNameFromId(id);
         if (playerPets.contains(id)) {
             if (message) {
                 Message.PET_HAS.send(player, MessagesUtils.tagResolver("pet-name", petName));
@@ -162,7 +163,7 @@ public class FantasticPetsUtils {
     }
 
     public static boolean isAllPets(Player player) {
-        List<String> playerPets = PetsUtils.getPlayerPets(player);
+        List<String> playerPets = petsAPI.getPlayerPets(player);
         List<String> allPets = PetsFileManager.getPIList(FantasticPetsPlugin.get());
 
         if (allPets.isEmpty()) {
@@ -176,5 +177,4 @@ public class FantasticPetsUtils {
 
         return false;
     }
-
 }

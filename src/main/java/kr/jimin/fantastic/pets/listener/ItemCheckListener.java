@@ -8,7 +8,7 @@ import kr.jimin.fantastic.pets.util.item.ItemHandler;
 import kr.jimin.fantastic.pets.util.logs.LogsManager;
 import kr.jimin.fantastic.pets.util.pet.FantasticPetsUtils;
 import kr.jimin.fantastic.pets.util.pet.PetsFileManager;
-import kr.jimin.fantastic.pets.util.pet.PetsUtils;
+import kr.jimin.fantastic.pets.api.FantasticPetsAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
-public class ItemCheckListener implements Listener {
+public class ItemCheckListener extends FantasticPetsAPI implements Listener {
     private final FantasticPetsPlugin plugin;
 
     public ItemCheckListener(FantasticPetsPlugin plugin) {
@@ -81,7 +81,7 @@ public class ItemCheckListener implements Listener {
             return;
         }
 
-        String petPerm = PetsUtils.getPetPermFromId(petId);
+        String petPerm = getPetPermFromId(petId);
         if (petPerm != null && player.hasPermission(petPerm)) {
             FantasticPetsUtils.isHasPlayerPet(player, petId, true);
             return;

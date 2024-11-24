@@ -1,82 +1,191 @@
 package kr.jimin.fantastic.pets.api;
 
-import kr.jimin.fantastic.pets.util.pet.PetsUtils;
+import fr.nocsy.mcpets.api.MCPetsAPI;
+import fr.nocsy.mcpets.data.Category;
+import fr.nocsy.mcpets.data.Pet;
+import fr.nocsy.mcpets.data.config.PetConfig;
+import kr.jimin.fantastic.pets.util.MessagesUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
+/**
+ * FantasticPetsAPI provides functionalities related to pets.
+ * This API allows access to and manipulation of pet information.
+ */
 public class FantasticPetsAPI {
 
-    // 랜덤 펫 ID를 반환합니다.
-    // Returns a random pet ID.
+    private Random random;
+
+    public FantasticPetsAPI() {
+        this.random = new Random();
+    }
+
+    /**
+     * Returns a random pet ID.
+     *
+     * @return Random pet ID
+     */
     public String getRandomPetId() {
-        return PetsUtils.getRandomPetId();
+        List<String> pets = getFormattedPetList(MCPetsAPI.getObjectPets().toString());
+        return pets.isEmpty() ? null : pets.get(random.nextInt(pets.size()));
     }
 
-    // 모든 펫의 리스트를 반환합니다.
-    // Returns a list of all pets.
+    /**
+     * Returns a list of all pets.
+     *
+     * @return List of all pets
+     */
     public List<String> getAllPets() {
-        return PetsUtils.getAllPets();
+        return getFormattedPetList(MCPetsAPI.getObjectPets().toString());
     }
 
-    // 특정 플레이어가 소유한 펫의 리스트를 반환합니다.
-    // Returns a list of pets owned by a specific player.
+    /**
+     * Returns a list of pets owned by a specific player.
+     *
+     * @param player Player whose pets are to be retrieved
+     * @return List of pets owned by the specific player
+     */
     public List<String> getPlayerPets(Player player) {
-        return PetsUtils.getPlayerPets(player);
+        return getFormattedPetList(MCPetsAPI.getAvailablePets(player).toString());
     }
 
-    // 펫 ID로부터 펫 이름을 반환합니다.
-    // Returns the pet name from a given pet ID.
+    /**
+     * Returns the pet name from a given pet ID.
+     *
+     * @param id Pet ID to retrieve the name from
+     * @return Pet name
+     */
     public String getPetNameFromId(String id) {
-        return PetsUtils.getPetNameFromId(id);
+        FileConfiguration config = getPetConfigFromId(id);
+        return config != null ? config.getString("Icon.Name") : null;
     }
 
-    // 펫 ID로부터 펫의 재질을 반환합니다.
-    // Returns the material of the pet from a given pet ID.
+    /**
+     * Returns the material of the pet from a given pet ID.
+     *
+     * @param id Pet ID to retrieve the material from
+     * @return Pet material
+     */
     public String getPetMaterialFromId(String id) {
-        return PetsUtils.getPetMaterialFromId(id);
+        FileConfiguration config = getPetConfigFromId(id);
+        return config != null ? config.getString("Icon.Material") : "STONE";
     }
 
-    // 펫 ID로부터 커스텀 모델 데이터를 반환합니다.
-    // Returns the custom model data of the pet from a given pet ID.
+    /**
+     * Returns the custom model data of the pet from a given pet ID.
+     *
+     * @param id Pet ID to retrieve the custom model data from
+     * @return Pet's custom model data
+     */
     public int getPetCustomModelDataFromId(String id) {
-        return PetsUtils.getPetCustomModelDataFromId(id);
+        FileConfiguration config = getPetConfigFromId(id);
+        return config != null ? config.getInt("Icon.CustomModelData") : -1;
     }
 
-    // 펫 ID로부터 펫의 설명을 반환합니다.
-    // Returns the lore of the pet from a given pet ID.
+    /**
+     * Returns the lore of the pet from a given pet ID.
+     *
+     * @param id Pet ID to retrieve the lore from
+     * @return List of pet lore
+     */
     public List<String> getPetLoreFromId(String id) {
-        return PetsUtils.getPetLoreFromId(id);
+        FileConfiguration config = getPetConfigFromId(id);
+        return config != null ? config.getStringList("Icon.Description") : Collections.emptyList();
     }
 
-    // 펫 ID로부터 펫의 권한을 반환합니다.
-    // Returns the permission of the pet from a given pet ID.
+    /**
+     * Returns the permission of the pet from a given pet ID.
+     *
+     * @param id Pet ID to retrieve the permission from
+     * @return Pet permission
+     */
     public String getPetPermFromId(String id) {
-        return PetsUtils.getPetPermFromId(id);
+        FileConfiguration config = getPetConfigFromId(id);
+        return config != null ? config.getString("Permission") : null;
     }
 
-    // 펫 ID로부터 카테고리를 반환합니다.
-    // Returns the category of the pet from a given pet ID.
-    public static String getCategoryOfPet(String petId) {
-        return PetsUtils.getCategoryOfPet(petId);
+    /**
+     * Returns the category of the pet from a given pet ID.
+     *
+     * @param petId Pet ID to retrieve the category from
+     * @return Pet category
+     */
+    public String getCategoryOfPet(String petId) {
+        List<Category> allCategories = Category.getCategories();
+        for (Category category : allCategories) {
+            if (category.getPets().stream().anyMatch(pet -> pet.getId().equals(petId))) {
+                return category.getId();
+            }
+        }
+        return null;
     }
 
-    // 카테고리 ID로부터 해당 카테고리의 펫 리스트를 반환합니다.
-    // Returns a list of pets in a given category ID.
-    public static List<String> getPetsInCategory(String categoryId) {
-        return PetsUtils.getPetsInCategory(categoryId);
+    /**
+     * Returns a list of pets in a given category ID.
+     *
+     * @param categoryId Category ID to retrieve the pet list from
+     * @return List of pets in the given category
+     */
+    public List<String> getPetsInCategory(String categoryId) {
+        Category category = Category.getFromId(categoryId);
+        return category != null ? category.getPets().stream().map(Pet::getId).toList() : new ArrayList<>();
     }
 
-    // 카테고리 ID로부터 카테고리 이름을 반환합니다.
-    // Returns the category name by category ID.
-    public static String getCategoryNameById(String categoryId) {
-        return PetsUtils.getCategoryNameById(categoryId);
+    /**
+     * Returns the category name by category ID.
+     *
+     * @param categoryId Category ID to retrieve the name from
+     * @return Category name
+     */
+    public String getCategoryNameById(String categoryId) {
+        Category category = Category.getFromId(categoryId);
+        return category != null ? category.getDisplayName() : null;
     }
 
-    // 펫 ID로부터 카테고리 이름을 반환합니다.
-    // Returns the category name by pet ID.
-    public static Component getCategoryNameByPetId(String petId) {
-        return PetsUtils.getCategoryNameByPetId(petId);
+    /**
+     * Returns the category name by pet ID.
+     *
+     * @param petId Pet ID to retrieve the category name from
+     * @return Pet's category name
+     */
+    public Component getCategoryNameByPetId(String petId) {
+        String petCategoryId = getCategoryOfPet(petId);
+        if (petCategoryId == null || petCategoryId.isEmpty()) return null;
+
+        String petCategoryName = getCategoryNameById(petCategoryId);
+        if (petCategoryName == null) return null;
+
+        return MessagesUtils.processMessage(petCategoryName);
+    }
+
+    // Internal method: Helper method to format pet list
+    private List<String> getFormattedPetList(String petList) {
+        String[] petsArray = petList
+                .replace("AlmPet", "")
+                .replace(";", "")
+                .replace("[", "")
+                .replace("]", "")
+                .split(",");
+
+        List<String> pets = new ArrayList<>();
+        for (String pet : petsArray) {
+            String trimmedPet = pet.trim();
+            if (!trimmedPet.isEmpty()) {
+                pets.add(trimmedPet);
+            }
+        }
+        return pets;
+    }
+
+    // Internal method: Helper method to get configuration from pet ID
+    private FileConfiguration getPetConfigFromId(String id) {
+        PetConfig petConfig = PetConfig.getConfig(id);
+        return petConfig != null ? petConfig.getConfig() : null;
     }
 }

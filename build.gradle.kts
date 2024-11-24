@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "kr.jimin.fantastic.pets"
-version = "1.0.4"
+version = "1.0.5"
 
 val paperVersion = "1.20.1-R0.1-SNAPSHOT"
 val commandApiVersion = "9.6.1"
@@ -52,9 +52,6 @@ tasks {
     }
 
     shadowJar {
-        // archiveFileName.set("${rootProject.name}-$version.jar")
-        // destinationDirectory.set(file("C:\\Users\\aa990\\OneDrive\\바탕 화면\\minecraft 관련\\server\\test_pets\\plugins"))
-
         relocate("org.bstats", "kr.jimin.fantastic.pets.shadow.bstats")
         relocate("dev.jorel.commandapi", "kr.jimin.fantastic.pets.shadow.commandapi")
 

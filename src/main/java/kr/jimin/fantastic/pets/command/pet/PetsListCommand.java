@@ -5,13 +5,13 @@ import kr.jimin.fantastic.pets.FantasticPetsPlugin;
 import kr.jimin.fantastic.pets.config.Message;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
 import kr.jimin.fantastic.pets.util.pet.PetsFileManager;
-import kr.jimin.fantastic.pets.util.pet.PetsUtils;
+import kr.jimin.fantastic.pets.api.FantasticPetsAPI;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetsListCommand {
+public class PetsListCommand extends FantasticPetsAPI {
     private final FantasticPetsPlugin plugin;
 
     public PetsListCommand(FantasticPetsPlugin plugin) {
@@ -47,7 +47,7 @@ public class PetsListCommand {
         List<String> petList = new ArrayList<>();
 
         if ("mcpets".equalsIgnoreCase(type)) {
-            petList.addAll(PetsUtils.getAllPets());
+            petList.addAll(getAllPets());
             Message.PET_LIST_TYPE_FORMAT.send(player, MessagesUtils.tagResolver("plugin-type", "MCPets"));
         } else if ("fantasticpets".equalsIgnoreCase(type)) {
             petList.addAll(PetsFileManager.getPIList(plugin));
@@ -56,14 +56,13 @@ public class PetsListCommand {
 
         for (int i = 0; i < petList.size(); i++) {
             String petId = petList.get(i);
-            String petName = PetsUtils.getPetNameFromId(petId); // 펫 이름 가져오기
+            String petName = getPetNameFromId(petId);
 
             Message.PET_LIST_PET_FORMAT.send(player, MessagesUtils.tagResolver("number-index", String.valueOf(i + 1)),
                     MessagesUtils.tagResolver("pet-id", petId),
-                    MessagesUtils.tagResolver("pet-name", PetsUtils.getPetNameFromId(petId)));
+                    MessagesUtils.tagResolver("pet-name", petName));
         }
 
         return petList;
     }
-
 }
