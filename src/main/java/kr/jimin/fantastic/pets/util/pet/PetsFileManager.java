@@ -99,7 +99,7 @@ public class PetsFileManager {
                 }
             }
         } else {
-            Logs.logError("No pet files found in the Pets folder.");
+            Logs.logWarning("No pet files found in the Pets folder.");
         }
     }
 

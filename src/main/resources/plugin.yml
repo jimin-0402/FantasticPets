@@ -2,10 +2,15 @@ name: FantasticPets
 main: kr.jimin.fantastic.pets.FantasticPetsPlugin
 version: '${version}'
 api-version: 1.20
-author: Jimin
+author: jimin_0402
+website: https://www.spigotmc.org/resources/fantasticpets.120926/
 softdepend:
   - ItemsAdder
   - Oraxen
   - HeadDatabase
+  - Nexo
 depend:
   - MCPets
+  - LuckPerms
+  - ModelEngine
+  - MythicMobs

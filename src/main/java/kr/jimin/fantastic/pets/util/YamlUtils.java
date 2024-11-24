@@ -18,8 +18,8 @@ public class YamlUtils extends YamlConfiguration {
         try {
             config.load(file);
         } catch (InvalidConfigurationException e) {
-            Logs.logError("Error loading YAML configuration file: " + file.getName());
-            Logs.logError("Ensure that your config is formatted correctly:");
+            Logs.logWarning("Error loading YAML configuration file: " + file.getName());
+            Logs.logWarning("Ensure that your config is formatted correctly:");
             Logs.logWarning(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class YamlUtils extends YamlConfiguration {
         try {
             super.load(file);
         } catch (Exception e) {
-            Logs.logError("Error loading YAML configuration file: " + file.getName());
+            Logs.logWarning("Error loading YAML configuration file: " + file.getName());
             if (Config.DEBUG.toBool()) Logs.logWarning(e.getMessage());
         }
     }
@@ -43,7 +43,7 @@ public class YamlUtils extends YamlConfiguration {
             config.set(section.getCurrentPath(), section);
             config.save(file);
         } catch (Exception e) {
-            Logs.logError("Error saving YAML configuration file: " + file.getName());
+            Logs.logWarning("Error saving YAML configuration file: " + file.getName());
             if (Config.DEBUG.toBool()) Logs.logWarning(e.getMessage());
         }
     }

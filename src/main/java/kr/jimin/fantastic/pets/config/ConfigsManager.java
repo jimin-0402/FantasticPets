@@ -43,7 +43,7 @@ public class ConfigsManager {
             try {
                 inputStreamReader.close();
             } catch (IOException e) {
-                Logs.logError("Failed to extract default file: " + source);
+                Logs.logWarning("Failed to extract default file: " + source);
                 if (Config.DEBUG.toBool()) e.printStackTrace();
             }
         }
@@ -97,10 +97,10 @@ public class ConfigsManager {
 
                     newConfig.save(file);
                 } else {
-                    Logs.logError("The example.yml file does not exist.");
+                    Logs.logWarning("The example.yml file does not exist.");
                 }
             } catch (IOException e) {
-                Logs.logError("Error copying example.yml content: " + e.getMessage());
+                Logs.logWarning("Error copying example.yml content: " + e.getMessage());
             }
         }
     }

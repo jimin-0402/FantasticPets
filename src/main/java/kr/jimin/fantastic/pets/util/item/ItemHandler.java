@@ -3,6 +3,7 @@ package kr.jimin.fantastic.pets.util.item;
 import kr.jimin.fantastic.pets.util.item.factories.ItemFactory;
 import kr.jimin.fantastic.pets.util.item.factories.impl.HDBFactory;
 import kr.jimin.fantastic.pets.util.item.factories.impl.IAFactory;
+import kr.jimin.fantastic.pets.util.item.factories.impl.NexoFactory;
 import kr.jimin.fantastic.pets.util.item.factories.impl.OraxenFactory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +20,7 @@ public class ItemHandler {
         factories.put("ORAXEN", new OraxenFactory());
         factories.put("ITEMSADDER", new IAFactory());
         factories.put("HDB", new HDBFactory());
+        factories.put("NEXO", new NexoFactory());
     }
 
     public static ItemUtils create(

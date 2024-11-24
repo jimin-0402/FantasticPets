@@ -49,8 +49,8 @@ public class GiveItemCommand {
                     }
 
                     customItem.giveItem(player, amount);
-                    Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("player", player.name()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));
-                    Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("player", sender.name()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));
+                    Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("player", player.getName()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));
+                    Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("player", sender.getName()), MessagesUtils.tagResolver("pet-name", Config.PET_ITEM_NAME.toComponent()));
 
                     if (Config.SETTING_LOG.toBool()) {
                         new LogsManager(plugin).commandLog("give", player.getName(), player.getName(), "MainItem", String.valueOf(amount));

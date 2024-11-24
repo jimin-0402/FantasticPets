@@ -21,7 +21,7 @@ public class SoundsUtils {
         Float pitch = parseFloatOrNull(pitchString);
 
         if (volume == null || pitch == null) {
-            Logs.logError("Invalid volume or pitch: volume='" + volumeString + "', pitch='" + pitchString + "'");
+            Logs.logWarning("Invalid volume or pitch: volume='" + volumeString + "', pitch='" + pitchString + "'");
             return;
         }
 

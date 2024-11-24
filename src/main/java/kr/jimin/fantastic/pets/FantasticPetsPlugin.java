@@ -27,7 +27,7 @@ public class FantasticPetsPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true));
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(get()).silentLogs(true));
     }
 
     @Override

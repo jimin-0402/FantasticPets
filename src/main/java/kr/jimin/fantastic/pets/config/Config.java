@@ -51,7 +51,7 @@ public enum Config {
         try {
             if (save) settingFile.save(FantasticPetsPlugin.get().getDataFolder().toPath().resolve("settings.yml").toFile());
         } catch (Exception e) {
-            Logs.logError("Failed to apply changes to settings.yml");
+            Logs.logWarning("Failed to apply changes to settings.yml");
         }
     }
 
