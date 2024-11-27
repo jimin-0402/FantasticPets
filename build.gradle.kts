@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "kr.jimin.fantastic.pets"
-version = "1.0.5"
+version = "1.0.6"
 
 val paperVersion = "1.20.1-R0.1-SNAPSHOT"
 val commandApiVersion = "9.6.1"

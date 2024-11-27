@@ -6,7 +6,7 @@ general:
 
 pet:
   category:
-    prefix: "<reset><#43c9fa>Category</reset>"
+    prefix: "&bTier&r"
   ownership:
     has: "<prefix><#b8bbc2>You own <reset><pet-name></reset><#b8bbc2>."
     has-target: "<prefix><#43c9fa><player><#b8bbc2> already owns <reset><pet-name></reset><#b8bbc2>."
@@ -45,6 +45,10 @@ command:
   take:
     player: "<prefix><reset><pet-name></reset><#b8bbc2> was taken from <#43c9fa><player><#b8bbc2>."
     target: "<prefix><#d15335><player><#b8bbc2> took your <reset><pet-name></reset><#b8bbc2>."
+
+title:
+  main: "<category-name><category-prefix> <pet-name>"
+  sub: "<chance>%"
 
 logs:
   date: "yyyy-MM-dd HH:mm:ss"

@@ -38,6 +38,11 @@ public enum Message {
     COMMAND_TAKE_PLAYER("command.take.player"),
     COMMAND_TAKE_TARGET("command.take.target"),
 
+    // Title
+    TITLE_MAIN("title.main"),
+    TITLE_SUB("title.sub"),
+
+    // Logs
     LOGS_DATE("logs.date"),
     LOGS_COMMAND("logs.command"),
     LOGS_USER("logs.user");

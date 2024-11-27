@@ -2,10 +2,7 @@ package kr.jimin.fantastic.pets.config;
 
 import kr.jimin.fantastic.pets.FantasticPetsPlugin;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
-import kr.jimin.fantastic.pets.util.logs.Logs;
 import net.kyori.adventure.text.Component;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.List;
 
@@ -17,6 +14,7 @@ public enum Config {
     SETTING_LANGUAGE("Setting.language"),
     SETTING_CLICK_TYPE("Setting.cluck-type"),
     SETTING_LOG("Setting.log"),
+    SETTING_MESSAGE_TYPE("Setting.message-type"),
 
     // pet
     PET_ALLOW_DUPLICATION("Pet.allow-duplicates"),
@@ -26,6 +24,11 @@ public enum Config {
     PET_ITEM_NAME("Pet.item.display-name"),
     PET_ITEM_LORE("Pet.item.lore"),
     PET_ITEM_MODEL_DATA("Pet.item.model-data"),
+
+    // Title
+    Title_FADE_IN("Title.fadeIn"),
+    Title_STAY("Title.stay"),
+    Title_FADE_OUT("Title.fadeOut"),
 
     // sound
     SOUND_SUCCESS("Sound.success"),
@@ -43,16 +46,6 @@ public enum Config {
 
     public Object getValue() {
         return FantasticPetsPlugin.get().getConfigsManager().getConfigs().get(path);
-    }
-    public void setValue(Object value) { setValue(value, true); }
-    public void setValue(Object value, boolean save) {
-        YamlConfiguration settingFile = FantasticPetsPlugin.get().getConfigsManager().getConfigs();
-        settingFile.set(path, value);
-        try {
-            if (save) settingFile.save(FantasticPetsPlugin.get().getDataFolder().toPath().resolve("settings.yml").toFile());
-        } catch (Exception e) {
-            Logs.logWarning("Failed to apply changes to settings.yml");
-        }
     }
 
     @Override
@@ -73,9 +66,5 @@ public enum Config {
     }
 
     public int toInt() { return (int) getValue(); }
-
-    public ConfigurationSection toConfigSection() {
-        return FantasticPetsPlugin.get().getConfigsManager().getConfigs().getConfigurationSection(path);
-    }
 
 }

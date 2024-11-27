@@ -6,7 +6,7 @@ general:
 
 pet:
   category:
-    prefix: "<reset><#43c9fa>등급</reset>"
+    prefix: "&b티어&r"
   ownership:
     has: "<prefix><#b8bbc2>당신은 <reset><pet-name></reset><#b8bbc2>을(를) 소유하고 있습니다."
     has-target: "<prefix><#43c9fa><player><#b8bbc2>님은 이미 <reset><pet-name></reset><#b8bbc2>을(를)
@@ -53,6 +53,10 @@ command:
       회수했습니다."
     target: "<prefix><#d15335><player><#b8bbc2>님이 당신의 <reset><pet-name></reset><#b8bbc2>을(를)
       회수했습니다."
+
+title:
+  main: "<category-name><category-prefix> <pet-name>"
+  sub: "<chance>%"
 
 logs:
   date: "yyyy-MM-dd HH:mm:ss"

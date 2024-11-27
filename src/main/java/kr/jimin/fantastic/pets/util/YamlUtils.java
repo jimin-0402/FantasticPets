@@ -36,15 +36,4 @@ public class YamlUtils extends YamlConfiguration {
             if (Config.DEBUG.toBool()) Logs.logWarning(e.getMessage());
         }
     }
-
-    public static void saveConfig(@NotNull File file, @NotNull ConfigurationSection section) {
-        try {
-            YamlConfiguration config = loadConfiguration(file);
-            config.set(section.getCurrentPath(), section);
-            config.save(file);
-        } catch (Exception e) {
-            Logs.logWarning("Error saving YAML configuration file: " + file.getName());
-            if (Config.DEBUG.toBool()) Logs.logWarning(e.getMessage());
-        }
-    }
 }

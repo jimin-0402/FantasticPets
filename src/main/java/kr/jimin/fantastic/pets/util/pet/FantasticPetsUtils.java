@@ -7,8 +7,10 @@ import kr.jimin.fantastic.pets.config.Message;
 import kr.jimin.fantastic.pets.util.LuckPermsUtils;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
 import kr.jimin.fantastic.pets.util.SoundsUtils;
+import kr.jimin.fantastic.pets.util.logs.Logs;
 import kr.jimin.fantastic.pets.util.logs.LogsManager;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
@@ -16,6 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
@@ -31,34 +34,8 @@ public class FantasticPetsUtils {
             return;
         }
 
-        boolean useWeight = Config.PET_USE_CHANCE.toBool();
-        String petId;
-
-        if (!useWeight) {
-            List<String> availablePets = PetsFileManager.getPIList(plugin);
-
-            if (availablePets.isEmpty()) {
-                Message.PET_WITHOUT_MAIN.send(player);
-                SoundsUtils.playSound(player, Config.SOUND_FAIL.toStringList());
-                return;
-            }
-
-            petId = availablePets.get(new Random().nextInt(availablePets.size()));
-        } else {
-            List<String> weightedPets = PetsFileManager.getWeightedPetList(plugin, playerPets);
-
-            if (weightedPets.isEmpty()) {
-                Message.PET_WITHOUT_MAIN.send(player);
-                SoundsUtils.playSound(player, Config.SOUND_FAIL.toStringList());
-                return;
-            }
-
-            petId = weightedPets.get(new Random().nextInt(weightedPets.size()));
-        }
-
+        String petId = getRandomPetId(plugin, player, playerPets);
         if (petId == null) {
-            Message.PET_WITHOUT_MAIN.send(player);
-            SoundsUtils.playSound(player, Config.SOUND_FAIL.toStringList());
             return;
         }
 
@@ -67,9 +44,29 @@ public class FantasticPetsUtils {
             return;
         }
 
-        player.getInventory().addItem(petItem);
+        addPetToInventory(player, item, petItem);
+        getCategoryMessage(plugin, player, petId, true);
+        SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
+        new LogsManager(plugin).logUser(player.getName(), petId);
+    }
 
+    private static String getRandomPetId(FantasticPetsPlugin plugin, Player player, List<String> playerPets) {
+        boolean useWeight = Config.PET_USE_CHANCE.toBool();
+        List<String> petList = useWeight ? PetsFileManager.getWeightedPetList(plugin, playerPets) : PetsFileManager.getPIList(plugin);
+
+        if (petList.isEmpty()) {
+            Message.PET_WITHOUT_MAIN.send(player);
+            SoundsUtils.playSound(player, Config.SOUND_FAIL.toStringList());
+            return null;
+        }
+
+        return petList.get(new Random().nextInt(petList.size()));
+    }
+
+    private static void addPetToInventory(Player player, ItemStack item, ItemStack petItem) {
+        player.getInventory().addItem(petItem);
         ItemStack handItem = player.getInventory().getItemInMainHand();
+
         if (handItem.isSimilar(item)) {
             int newAmount = handItem.getAmount() - 1;
             if (newAmount > 0) {
@@ -78,21 +75,75 @@ public class FantasticPetsUtils {
                 player.getInventory().setItemInMainHand(null);
             }
         }
-
-        getCategoryMessage(plugin, player, petId, true);
-        SoundsUtils.playSound(player, Config.SOUND_SUCCESS.toStringList());
-        new LogsManager(plugin).logUser(player.getName(), petId);
     }
 
     public static void getCategoryMessage(FantasticPetsPlugin plugin, Player player, String petId, boolean sendChance) {
         String petName = petsAPI.getPetNameFromId(petId);
-        Component categoryComponent = petsAPI.getCategoryNameByPetId(petId);
+        String categoryId = petsAPI.getCategoryOfPet(petId);
+        String categoryComponent = petsAPI.getCategoryNameById(categoryId);
+        String categoryPrefix = Message.PET_CATEGORY_PREFIX.toString();
 
-        boolean useChance = Config.PET_USE_CHANCE.toBool();
-        double chance = useChance ? PetsFileManager.getChance(plugin, petId) : 0.0;
+        String categoryName = (categoryId != null && !categoryId.isEmpty() && categoryComponent != null) ?
+                categoryComponent : "";
 
+        if (categoryId == null || categoryId.isEmpty()) {
+            if(Config.DEBUG.toBool()){ Logs.logWarning("No category found for petId " + petId); }
+        }
+
+        double chance = Config.PET_USE_CHANCE.toBool() ? PetsFileManager.getChance(plugin, petId) : 0.0;
+
+        String titleMessage = replacePlaceholders(Message.TITLE_MAIN.toString(), petName,
+                categoryName.isEmpty() ? "" : categoryPrefix, categoryName, chance);
+        String subtitleMessage = replacePlaceholders(Message.TITLE_SUB.toString(), petName,
+                categoryName.isEmpty() ? "" : categoryPrefix, categoryName, chance);
+
+        Component titleComponent = MessagesUtils.processMessage(titleMessage);
+        Component subtitleComponent = Config.PET_USE_CHANCE.toBool() ? MessagesUtils.processMessage(subtitleMessage) : Component.empty();
+
+        Title.Times times = Title.Times.times(
+                Duration.ofMillis(Config.Title_FADE_IN.toInt()),
+                Duration.ofMillis(Config.Title_STAY.toInt()),
+                Duration.ofMillis(Config.Title_FADE_OUT.toInt())
+        );
+
+        Title title = Title.title(titleComponent, subtitleComponent, times);
+        handleMessageDisplay(player, title, petName, categoryComponent, chance, sendChance);
+    }
+
+    private static void handleMessageDisplay(Player player, Title title, String petName, String categoryComponent, double chance, boolean sendChance) {
+        String messageType = Config.SETTING_MESSAGE_TYPE.toString();
+
+        switch (messageType) {
+            case "TITLE":
+                player.showTitle(title);
+                break;
+
+            case "CHAT":
+                sendPetMessage(player, petName, categoryComponent, chance, sendChance);
+                break;
+
+            case "DUAL":
+                player.showTitle(title);
+                sendPetMessage(player, petName, categoryComponent, chance, sendChance);
+                break;
+
+            case "NONE":
+            default:
+                break;
+        }
+    }
+
+    private static String replacePlaceholders(String template, String petName, String categoryPrefix, String categoryName, double chance) {
+        return template
+                .replace("<category-name>", categoryName)
+                .replace("<category-prefix>", categoryPrefix)
+                .replace("<pet-name>", petName)
+                .replace("<chance>", String.valueOf(chance));
+    }
+
+    private static void sendPetMessage(Player player, String petName, String categoryComponent, double chance, boolean sendChance) {
         if (Config.PET_USE_CATEGORY.toBool() && categoryComponent != null) {
-            if (sendChance && useChance) {
+            if (sendChance) {
                 Message.PET_ACQUIRED_CATEGORY_CHANCE.send(player,
                         MessagesUtils.tagResolver("pet-name", petName),
                         MessagesUtils.tagResolver("category-name", categoryComponent),
@@ -105,7 +156,7 @@ public class FantasticPetsUtils {
                         MessagesUtils.tagResolver("category-prefix", MessagesUtils.processMessage(Message.PET_CATEGORY_PREFIX.toString())));
             }
         } else {
-            if (sendChance && useChance) {
+            if (sendChance) {
                 Message.PET_ACQUIRED_CHANCE.send(player,
                         MessagesUtils.tagResolver("pet-name", petName),
                         MessagesUtils.tagResolver("chance", String.valueOf(chance)));
@@ -116,23 +167,25 @@ public class FantasticPetsUtils {
     }
 
     public static void addPetsPermPlayer(Player player, String petId) {
-        User user = LuckPermsUtils.getLuckPermsUser(player);
-        String petPerm = petsAPI.getPetPermFromId(petId);
-        if (petPerm != null) {
-            Node node = Node.builder(petPerm).build();
-            user.data().add(node);
-        }
-        LuckPermsProvider.get().getUserManager().saveUser(user);
+        updatePetPermissions(player, petId, true);
     }
 
     public static void removePetsPermPlayer(Player player, String petId) {
+        updatePetPermissions(player, petId, false);
+    }
+
+    private static void updatePetPermissions(Player player, String petId, boolean add) {
         User user = LuckPermsUtils.getLuckPermsUser(player);
         String petPerm = petsAPI.getPetPermFromId(petId);
         if (petPerm != null) {
             Node node = Node.builder(petPerm).build();
-            user.data().remove(node);
+            if (add) {
+                user.data().add(node);
+            } else {
+                user.data().remove(node);
+            }
+            LuckPermsProvider.get().getUserManager().saveUser(user);
         }
-        LuckPermsProvider.get().getUserManager().saveUser(user);
     }
 
     public static void giveItem(FantasticPetsPlugin plugin, CommandSender sender, Player player, String petId, int amount) {
@@ -146,7 +199,7 @@ public class FantasticPetsUtils {
         petItem.setAmount(amount);
         player.getInventory().addItem(petItem);
         Message.COMMAND_GIVE_PLAYER.send(sender, MessagesUtils.tagResolver("pet-name", petsAPI.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", player.displayName()));
-        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petsAPI.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", sender.name()));
+        Message.COMMAND_GIVE_TARGET.send(player, MessagesUtils.tagResolver("pet-name", petsAPI.getPetNameFromId(petId)), MessagesUtils.tagResolver("player", sender.getName()));
     }
 
     public static boolean isHasPlayerPet(Player player, String id, boolean message) {
@@ -165,10 +218,6 @@ public class FantasticPetsUtils {
     public static boolean isAllPets(Player player) {
         List<String> playerPets = petsAPI.getPlayerPets(player);
         List<String> allPets = PetsFileManager.getPIList(FantasticPetsPlugin.get());
-
-        if (allPets.isEmpty()) {
-            return false;
-        }
 
         if (playerPets.containsAll(allPets)) {
             Message.PET_HAS_ALL.send(player);

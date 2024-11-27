@@ -1,33 +1,24 @@
 # Created by Jimin from South Korea
+# WIKI : https://jimin.gitbook.io/fantasticpets
 
 # Don't touch
 debug: false
 
 Setting:
-  # Set the language.
-  # korean / english
-  language: "english"
-
-  # Set the click type.
-  # SHIFT can be detected. Example RIGHT:SHIFT
+  language: english
   cluck-type: RIGHT
-
-  # Log the log.
   log: true
+  message-type: CHAT
+
+Title:
+  fadeIn: 50
+  stay: 1000
+  fadeOut: 50
 
 Pet:
-  # The setting to allow duplicates.
   allow-duplicates: true
-
-  # Settings that use categories.
-  # Check your language files.
   use-category: true
-
-  # This is a setting that uses probability.
-  # Check the Pets folder.
   use-chance: true
-
-  # Item settings for spawning pets.
   item:
     material: ENCHANTED_BOOK
     display-name: "&7&lPet Ticket"
@@ -36,10 +27,7 @@ Pet:
       - " &8[Use] &7Use with Right-click."
     model-data: -1
 
-
 Sound:
-  # If you don't use it, you can disable it with [].
-  # sound setting: "soundName, volume, pitch"
   success:
     - "minecraft:entity.player.levelup, 1, 1"
   fail:

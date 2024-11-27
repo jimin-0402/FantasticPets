@@ -123,7 +123,7 @@ public class FantasticPetsAPI {
                 return category.getId();
             }
         }
-        return null;
+        return "";
     }
 
     /**
