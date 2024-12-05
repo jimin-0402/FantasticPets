@@ -4,10 +4,10 @@ plugins {
 }
 
 group = "kr.jimin.fantastic.pets"
-version = "1.0.6"
+version = "1.0.7"
 
 val paperVersion = "1.20.1-R0.1-SNAPSHOT"
-val commandApiVersion = "9.6.1"
+val commandApiVersion = "9.7.0"
 val platformVersion = "4.3.4"
 val bStatsVersion = "3.0.2"
 

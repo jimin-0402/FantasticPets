@@ -2,11 +2,8 @@ package kr.jimin.fantastic.pets.config;
 
 import kr.jimin.fantastic.pets.FantasticPetsPlugin;
 import kr.jimin.fantastic.pets.util.MessagesUtils;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 public enum Message {
 
@@ -66,19 +63,4 @@ public enum Message {
                 MessagesUtils.MINI_MESSAGE_WITH_TAGS.deserialize(lang, TagResolver.resolver(placeholders))
         );
     }
-
-    @NotNull
-    public final Component toComponent() {
-        return MessagesUtils.MINI_MESSAGE_WITH_TAGS.deserialize(toString());
-    }
-
-    @NotNull
-    public String toSerializedString() {
-        return MessagesUtils.LEGACY_SERIALIZER.serialize(toComponent());
-    }
-
-    public void log(final TagResolver... placeholders) {
-        send(Bukkit.getConsoleSender(), placeholders);
-    }
-
 }
